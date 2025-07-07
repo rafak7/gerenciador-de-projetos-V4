@@ -1,14 +1,6 @@
 {
   "projetos": [
     {
-      "id": "1",
-      "nome": "Sistema de E-commerce",
-      "descricao": "Desenvolvimento de plataforma de vendas online com carrinho de compras, sistema de pagamento e gestão de estoque.",
-      "preco": 25000,
-      "tipo": "Web Development",
-      "categoria": "E-commerce"
-    },
-    {
       "nome": "App Mobile DeliveryAAA",
       "descricao": "Aplicativo móvel para delivery de comida com geolocalização, pagamento integrado e rastreamento em tempo real.",
       "preco": 35000,
@@ -17,12 +9,12 @@
       "id": "2"
     },
     {
-      "id": "3",
-      "nome": "Dashboard Analytics",
+      "nome": "Dashboard Analyticsa",
       "descricao": "Painel administrativo para análise de dados com gráficos interativos, relatórios customizáveis e exportação de dados.",
       "preco": 18000,
+      "categoria": "Analytics",
       "tipo": "Web Development",
-      "categoria": "Analytics"
+      "id": "3"
     },
     {
       "id": "4",
@@ -47,22 +39,6 @@
       "preco": 80000,
       "tipo": "Web Development",
       "categoria": "Saúde"
-    },
-    {
-      "id": "8",
-      "nome": "Plataforma de Streaming",
-      "descricao": "Sistema de streaming de vídeo com upload, transcodificação automática, sistema de assinatura e analytics.",
-      "preco": 65000,
-      "tipo": "Web Development",
-      "categoria": "Mídia"
-    },
-    {
-      "id": "ddac",
-      "nome": "Dashboard Analytics (Cópia)",
-      "descricao": "Painel administrativo para análise de dados com gráficos interativos, relatórios customizáveis e exportação de dados.",
-      "preco": 18000,
-      "tipo": "Web Development",
-      "categoria": "Analytics"
     }
   ],
   "usuarios": [

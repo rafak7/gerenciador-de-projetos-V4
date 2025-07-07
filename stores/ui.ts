@@ -60,21 +60,32 @@ export const useUIStore = defineStore('ui', () => {
     }
   }
 
+  // Map para controlar timeouts das notificações
+  const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
   const addNotification = (notification: Omit<Notification, 'id'>) => {
-    const id = Date.now().toString()
+    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
     const newNotification: Notification = {
       id,
       duration: 5000, // 5 segundos por padrão
       ...notification
     }
     
+    // Limitar a 5 notificações simultâneas
+    if (notifications.value.length >= 5) {
+      const oldestNotification = notifications.value[0]
+      removeNotification(oldestNotification.id)
+    }
+    
     notifications.value.push(newNotification)
     
     // Auto remover após o tempo especificado
     if (newNotification.duration && newNotification.duration > 0) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         removeNotification(id)
       }, newNotification.duration)
+      
+      notificationTimeouts.set(id, timeoutId)
     }
     
     return id
@@ -84,10 +95,23 @@ export const useUIStore = defineStore('ui', () => {
     const index = notifications.value.findIndex(n => n.id === id)
     if (index !== -1) {
       notifications.value.splice(index, 1)
+      
+      // Limpar timeout se existir
+      const timeoutId = notificationTimeouts.get(id)
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        notificationTimeouts.delete(id)
+      }
     }
   }
 
   const clearAllNotifications = () => {
+    // Limpar todos os timeouts
+    notificationTimeouts.forEach((timeoutId) => {
+      clearTimeout(timeoutId)
+    })
+    notificationTimeouts.clear()
+    
     notifications.value = []
   }
 
@@ -106,7 +130,7 @@ export const useUIStore = defineStore('ui', () => {
       type: 'error',
       title,
       message,
-      duration: duration || 8000 // Erros ficam mais tempo
+      duration: duration || 7000 // Erros ficam mais tempo
     })
   }
 

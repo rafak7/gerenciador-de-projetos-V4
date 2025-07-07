@@ -1,39 +1,48 @@
 <template>
-  <div class="fixed top-4 right-4 z-50 space-y-2">
+  <div 
+    v-if="notifications.length > 0"
+    class="fixed top-20 md:top-4 right-4 left-4 md:left-auto z-[9999] md:w-96 md:max-w-sm space-y-3"
+    aria-live="assertive"
+  >
     <TransitionGroup
       name="notification"
       tag="div"
-      class="space-y-2"
+      class="space-y-3"
     >
       <div
         v-for="notification in notifications"
         :key="notification.id"
         :class="[
-          'max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden',
+          'bg-white dark:bg-gray-800 shadow-xl rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden transform transition-all duration-300',
           getNotificationClasses(notification.type)
         ]"
       >
         <div class="p-4">
           <div class="flex items-start">
             <div class="flex-shrink-0">
-              <component :is="getIcon(notification.type)" class="h-6 w-6" />
+              <component 
+                :is="getIcon(notification.type)" 
+                :class="[
+                  'h-6 w-6',
+                  getIconClasses(notification.type)
+                ]" 
+              />
             </div>
-            <div class="ml-3 w-0 flex-1 pt-0.5">
-              <p class="text-sm font-medium text-gray-900 dark:text-white">
+            <div class="ml-3 flex-1">
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">
                 {{ notification.title }}
               </p>
-              <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
+              <p v-if="notification.message" class="mt-1 text-sm text-gray-600 dark:text-gray-300">
                 {{ notification.message }}
               </p>
             </div>
-            <div class="ml-4 flex-shrink-0 flex">
+            <div class="ml-4 flex-shrink-0">
               <button
                 @click="removeNotification(notification.id)"
-                class="bg-white dark:bg-gray-800 rounded-md inline-flex text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                class="inline-flex text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md p-1.5"
+                aria-label="Fechar notificação"
               >
-                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
+                <XMarkIcon class="h-5 w-5" />
               </button>
             </div>
           </div>
@@ -48,7 +57,8 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
   XCircleIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  XMarkIcon
 } from '@heroicons/vue/24/outline'
 
 // Store
@@ -67,21 +77,34 @@ const getIcon = (type: string) => {
   return icons[type as keyof typeof icons] || InformationCircleIcon
 }
 
+const getIconClasses = (type: string) => {
+  const classes = {
+    success: 'text-green-500',
+    error: 'text-red-500',
+    warning: 'text-yellow-500',
+    info: 'text-blue-500'
+  }
+  return classes[type as keyof typeof classes] || classes.info
+}
+
 const getNotificationClasses = (type: string) => {
   const classes = {
-    success: 'border-l-4 border-green-400',
-    error: 'border-l-4 border-red-400',
-    warning: 'border-l-4 border-yellow-400',
-    info: 'border-l-4 border-blue-400'
+    success: 'border-l-4 border-green-500',
+    error: 'border-l-4 border-red-500',
+    warning: 'border-l-4 border-yellow-500',
+    info: 'border-l-4 border-blue-500'
   }
   return classes[type as keyof typeof classes] || classes.info
 }
 </script>
 
 <style scoped>
-.notification-enter-active,
+.notification-enter-active {
+  transition: all 0.3s ease-out;
+}
+
 .notification-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in;
 }
 
 .notification-enter-from {
