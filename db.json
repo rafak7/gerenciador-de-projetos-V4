@@ -1,0 +1,152 @@
+{
+  "projetos": [
+    {
+      "id": "1",
+      "nome": "Sistema de E-commerce",
+      "descricao": "Desenvolvimento de plataforma de vendas online com carrinho de compras, sistema de pagamento e gestão de estoque.",
+      "preco": 25000,
+      "tipo": "Web Development",
+      "categoria": "E-commerce"
+    },
+    {
+      "nome": "App Mobile DeliveryAAA",
+      "descricao": "Aplicativo móvel para delivery de comida com geolocalização, pagamento integrado e rastreamento em tempo real.",
+      "preco": 35000,
+      "categoria": "Delivery",
+      "tipo": "Mobile Development",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "nome": "Dashboard Analytics",
+      "descricao": "Painel administrativo para análise de dados com gráficos interativos, relatórios customizáveis e exportação de dados.",
+      "preco": 18000,
+      "tipo": "Web Development",
+      "categoria": "Analytics"
+    },
+    {
+      "id": "4",
+      "nome": "Sistema de CRM",
+      "descricao": "Software de gestão de relacionamento com cliente incluindo lead tracking, pipeline de vendas e automação de marketing.",
+      "preco": 42000,
+      "tipo": "Web Development",
+      "categoria": "CRM"
+    },
+    {
+      "id": "5",
+      "nome": "Plataforma de Ensino",
+      "descricao": "Sistema de educação à distância com videoaulas, exercícios interativos, fórum de discussão e certificados.",
+      "preco": 30000,
+      "tipo": "Web Development",
+      "categoria": "Educação"
+    },
+    {
+      "id": "7",
+      "nome": "Sistema de Gestão Hospitalar",
+      "descricao": "Software para gestão de hospital com prontuário eletrônico, agendamento de consultas e controle de medicamentos.",
+      "preco": 80000,
+      "tipo": "Web Development",
+      "categoria": "Saúde"
+    },
+    {
+      "id": "8",
+      "nome": "Plataforma de Streaming",
+      "descricao": "Sistema de streaming de vídeo com upload, transcodificação automática, sistema de assinatura e analytics.",
+      "preco": 65000,
+      "tipo": "Web Development",
+      "categoria": "Mídia"
+    },
+    {
+      "id": "ddac",
+      "nome": "Dashboard Analytics (Cópia)",
+      "descricao": "Painel administrativo para análise de dados com gráficos interativos, relatórios customizáveis e exportação de dados.",
+      "preco": 18000,
+      "tipo": "Web Development",
+      "categoria": "Analytics"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "email": "admin@gerenciador.com",
+      "senha": "admin123",
+      "nome": "Administrador",
+      "token": "fake-jwt-token-admin-123"
+    },
+    {
+      "id": "2",
+      "email": "user@gerenciador.com",
+      "senha": "user123",
+      "nome": "Usuário Teste",
+      "token": "fake-jwt-token-user-456"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "E-commerce"
+    },
+    {
+      "id": "2",
+      "nome": "Delivery"
+    },
+    {
+      "id": "3",
+      "nome": "Analytics"
+    },
+    {
+      "id": "4",
+      "nome": "CRM"
+    },
+    {
+      "id": "5",
+      "nome": "Educação"
+    },
+    {
+      "id": "6",
+      "nome": "Finanças"
+    },
+    {
+      "id": "7",
+      "nome": "Saúde"
+    },
+    {
+      "id": "8",
+      "nome": "Mídia"
+    },
+    {
+      "id": "9",
+      "nome": "SaaS"
+    },
+    {
+      "id": "10",
+      "nome": "IoT"
+    }
+  ],
+  "tipos": [
+    {
+      "id": "1",
+      "nome": "Web Development"
+    },
+    {
+      "id": "2",
+      "nome": "Mobile Development"
+    },
+    {
+      "id": "3",
+      "nome": "Desktop Development"
+    },
+    {
+      "id": "4",
+      "nome": "API Development"
+    },
+    {
+      "id": "5",
+      "nome": "Data Science"
+    },
+    {
+      "id": "6",
+      "nome": "DevOps"
+    }
+  ]
+}
