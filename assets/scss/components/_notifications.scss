@@ -1,0 +1,178 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Container de notificações
+.notifications-container {
+  position: fixed;
+  top: 80px;
+  right: $spacing-md;
+  left: $spacing-md;
+  z-index: 9999;
+  max-width: 384px;
+  
+  @media (min-width: $tablet) {
+    top: $spacing-md;
+    left: auto;
+    width: 384px;
+    max-width: 384px;
+  }
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+// Card de notificação
+.notification-card {
+  background-color: $bg-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  
+  &.success {
+    border-left: 4px solid $success-color;
+  }
+  
+  &.error {
+    border-left: 4px solid $danger-color;
+  }
+  
+  &.warning {
+    border-left: 4px solid $warning-color;
+  }
+  
+  &.info {
+    border-left: 4px solid $primary-color;
+  }
+}
+
+.notification-content {
+  padding: $spacing-md;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+}
+
+.notification-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  
+  &.success {
+    color: $success-color;
+  }
+  
+  &.error {
+    color: $danger-color;
+  }
+  
+  &.warning {
+    color: $warning-color;
+  }
+  
+  &.info {
+    color: $primary-color;
+  }
+}
+
+.notification-text {
+  flex: 1;
+  min-width: 0;
+  
+  .notification-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0 0 2px 0;
+    line-height: 1.4;
+  }
+  
+  .notification-message {
+    font-size: 13px;
+    color: $text-light;
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.notification-close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: $text-light;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: $border-radius-sm;
+  transition: all $transition-normal;
+  
+  &:hover {
+    color: $text-dark;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $primary-color;
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Animações
+.notification-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.notification-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.notification-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.notification-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.notification-move {
+  transition: transform 0.3s ease;
+}
+
+// Dark mode
+.dark {
+  .notification-card {
+    background-color: $bg-dark-secondary;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .notification-text {
+    .notification-title {
+      color: $text-dark-primary;
+    }
+    
+    .notification-message {
+      color: $text-dark-light;
+    }
+  }
+  
+  .notification-close {
+    color: $text-dark-light;
+    
+    &:hover {
+      color: $text-dark-primary;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+} 

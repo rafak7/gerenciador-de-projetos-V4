@@ -1,0 +1,86 @@
+@use 'variables' as *;
+
+// Layout principal
+.app-container {
+  min-height: 100vh;
+  background-color: $bg-gray;
+  transition: all $transition-normal;
+  
+  &.sidebar-open {
+    .main-content {
+      margin-left: 256px;
+      
+      @media (max-width: $tablet) {
+        margin-left: 0;
+      }
+    }
+  }
+  
+  &.sidebar-closed {
+    .main-content {
+      margin-left: 64px;
+      
+      @media (max-width: $tablet) {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// Conteúdo principal
+.main-content {
+  transition: margin-left $transition-normal;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  .content-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: $bg-white;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  .content-body {
+    flex: 1;
+    padding: $spacing-xl;
+    
+    @media (max-width: $tablet) {
+      padding: $spacing-lg;
+    }
+    
+    @media (max-width: $mobile) {
+      padding: $spacing-md;
+    }
+  }
+}
+
+// Overlay para mobile
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  
+  @media (min-width: $tablet) {
+    display: none;
+  }
+}
+
+// Estados do Dark Mode
+.dark {
+  .app-container {
+    background-color: $bg-dark;
+  }
+  
+  .main-content {
+    .content-header {
+      background-color: $bg-dark-secondary;
+      border-bottom-color: $border-dark;
+    }
+  }
+} 

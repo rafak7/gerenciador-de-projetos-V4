@@ -41,28 +41,36 @@
       "categoria": "Saúde"
     },
     {
-      "id": "7728",
-      "nome": "TesteTesteTesteTeste",
-      "descricao": "TesteTesteTesteTesteTeste",
-      "preco": 1000,
-      "categoria": "Educação",
-      "tipo": "Desktop Development"
+      "id": "8",
+      "nome": "Sistema Ifood",
+      "descricao": "Sistema de iFood ",
+      "preco": 10000,
+      "categoria": "CRM",
+      "tipo": "API Development"
     },
     {
-      "id": "e33c",
-      "nome": "abracadabra",
-      "descricao": "testefix: corrige geração de IDs aleatórios na criação de projetosfix: corrige geração de IDs aleatórios na criação de projetos",
-      "preco": 12322,
+      "id": "9",
+      "nome": "Sistema TEste",
+      "descricao": "TEste novo sistema",
+      "preco": 10000,
+      "categoria": "E-commerce",
+      "tipo": "Mobile Development"
+    },
+    {
+      "id": "10",
+      "nome": "Sistema 99TAXI",
+      "descricao": "teste 99 taxi novo sistema",
+      "preco": 5000,
       "categoria": "CRM",
       "tipo": "Data Science"
     },
     {
-      "id": "7729",
-      "nome": "dasdasdasdasda",
-      "descricao": "sdasdasdasdasd",
-      "preco": 11111,
-      "categoria": "CRM",
-      "tipo": "Desktop Development"
+      "id": "11",
+      "nome": "Sistema Uber Eats",
+      "descricao": "Sistema Uber Eats Teste ",
+      "preco": 5000,
+      "categoria": "IoT",
+      "tipo": "DevOps"
     }
   ],
   "usuarios": [

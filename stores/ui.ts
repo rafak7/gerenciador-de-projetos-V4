@@ -4,6 +4,7 @@ import type { Notification } from '~/types'
 export const useUIStore = defineStore('ui', () => {
   // State
   const sidebarOpen = ref(false)
+  const sidebarCollapsed = ref(false)
   const darkMode = ref(false)
   const notifications = ref<Notification[]>([])
   const loading = ref({
@@ -22,6 +23,24 @@ export const useUIStore = defineStore('ui', () => {
 
   const openSidebar = () => {
     sidebarOpen.value = true
+  }
+
+  const toggleSidebarCollapse = () => {
+    sidebarCollapsed.value = !sidebarCollapsed.value
+    
+    // Persistir preferência
+    if (process.client) {
+      localStorage.setItem('sidebar-collapsed', sidebarCollapsed.value.toString())
+    }
+  }
+
+  const initializeSidebarState = () => {
+    if (process.client) {
+      const savedState = localStorage.getItem('sidebar-collapsed')
+      if (savedState) {
+        sidebarCollapsed.value = savedState === 'true'
+      }
+    }
   }
 
   const toggleDarkMode = () => {
@@ -168,11 +187,13 @@ export const useUIStore = defineStore('ui', () => {
   // Initialize on client
   if (process.client) {
     initializeDarkMode()
+    initializeSidebarState()
   }
 
   return {
     // State
     sidebarOpen: readonly(sidebarOpen),
+    sidebarCollapsed: readonly(sidebarCollapsed),
     darkMode: readonly(darkMode),
     notifications: readonly(notifications),
     loading: readonly(loading),
@@ -181,8 +202,10 @@ export const useUIStore = defineStore('ui', () => {
     toggleSidebar,
     closeSidebar,
     openSidebar,
+    toggleSidebarCollapse,
     toggleDarkMode,
     initializeDarkMode,
+    initializeSidebarState,
     addNotification,
     removeNotification,
     clearAllNotifications,

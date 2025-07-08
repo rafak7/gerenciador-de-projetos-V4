@@ -1,25 +1,29 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div :class="['app-container', sidebarCollapsed ? 'sidebar-closed' : 'sidebar-open']">
     <!-- Sidebar -->
     <Sidebar 
       :open="sidebarOpen" 
+      :collapsed="sidebarCollapsed"
       @close="closeSidebar"
+      @toggle-collapse="toggleSidebarCollapse"
     />
 
     <!-- Overlay para mobile -->
     <div 
       v-if="sidebarOpen" 
-      class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+      class="sidebar-overlay"
       @click="closeSidebar"
     />
 
     <!-- Main Layout -->
-    <div class="lg:ml-64">
+    <div class="main-content">
       <!-- Header -->
-      <Header @toggle-sidebar="toggleSidebar" />
+      <div class="content-header">
+        <Header @toggle-sidebar="toggleSidebar" />
+      </div>
 
       <!-- Main Content -->
-      <main class="px-6 py-6">
+      <main class="content-body">
         <NuxtPage />
       </main>
     </div>
@@ -35,8 +39,8 @@
 <script setup lang="ts">
 // Stores
 const uiStore = useUIStore()
-const { sidebarOpen, isLoading } = storeToRefs(uiStore)
-const { toggleSidebar, closeSidebar } = uiStore
+const { sidebarOpen, sidebarCollapsed, isLoading } = storeToRefs(uiStore)
+const { toggleSidebar, closeSidebar, toggleSidebarCollapse } = uiStore
 
 // SEO
 useHead({

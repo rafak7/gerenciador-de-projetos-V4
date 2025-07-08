@@ -1,68 +1,60 @@
 <template>
-  <div class="max-w-2xl mx-auto">
-    <div v-if="loading.single" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+  <div class="projetos-page">
+    <div v-if="loading.single" class="loading-state">
+      <div class="spinner"></div>
     </div>
 
-    <div v-else-if="error" class="card border-red-200 bg-red-50 dark:bg-red-900/20">
-      <div class="text-red-600 dark:text-red-400 text-center">
-        <h3 class="font-medium">Erro ao carregar projeto</h3>
-        <p class="text-sm mt-1">{{ error }}</p>
-        <div class="mt-4 space-x-2">
-          <button @click="loadProjeto" class="btn-primary">
+    <div v-else-if="error" class="error-state">
+      <div class="error-content">
+        <h3>Erro ao carregar projeto</h3>
+        <p>{{ error }}</p>
+        <div class="pagination">
+          <button @click="loadProjeto" class="create-btn">
             Tentar novamente
           </button>
-          <NuxtLink to="/projetos" class="btn-secondary">
+          <NuxtLink to="/projetos" class="page-btn">
             Voltar para projetos
           </NuxtLink>
         </div>
       </div>
     </div>
 
-    <div v-else-if="currentProjeto" class="card">
-      <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Editar Projeto</h1>
-        <p class="text-gray-600 dark:text-gray-400">Atualize as informações do projeto</p>
+    <div v-else-if="currentProjeto" class="filters-card">
+      <div class="form-header">
+        <h1>Editar Projeto</h1>
+        <p>Atualize as informações do projeto</p>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="space-y-6">
-        <div>
-          <label for="nome" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Nome do Projeto *
-          </label>
+      <form @submit.prevent="handleSubmit" class="form-container">
+        <div class="filter-group">
+          <label for="nome">Nome do Projeto *</label>
           <input
             id="nome"
             v-model="form.nome"
             type="text"
             required
-            class="input-field mt-1"
-            :class="{ 'border-red-500': errors.nome }"
+            :class="{ 'error': errors.nome }"
             placeholder="Nome do projeto"
           />
           <p v-if="errors.nome" class="error-message">{{ errors.nome }}</p>
         </div>
 
-        <div>
-          <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Descrição *
-          </label>
+        <div class="filter-group">
+          <label for="descricao">Descrição *</label>
           <textarea
             id="descricao"
             v-model="form.descricao"
             rows="4"
             required
-            class="input-field mt-1"
-            :class="{ 'border-red-500': errors.descricao }"
+            :class="{ 'error': errors.descricao }"
             placeholder="Descreva o projeto detalhadamente"
           />
           <p v-if="errors.descricao" class="error-message">{{ errors.descricao }}</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label for="preco" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Preço (R$) *
-            </label>
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="preco">Preço (R$) *</label>
             <input
               id="preco"
               v-model.number="form.preco"
@@ -70,23 +62,19 @@
               step="0.01"
               min="0"
               required
-              class="input-field mt-1"
-              :class="{ 'border-red-500': errors.preco }"
+              :class="{ 'error': errors.preco }"
               placeholder="0.00"
             />
             <p v-if="errors.preco" class="error-message">{{ errors.preco }}</p>
           </div>
 
-          <div>
-            <label for="categoria" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Categoria *
-            </label>
+          <div class="filter-group">
+            <label for="categoria">Categoria *</label>
             <select
               id="categoria"
               v-model="form.categoria"
               required
-              class="input-field mt-1"
-              :class="{ 'border-red-500': errors.categoria }"
+              :class="{ 'error': errors.categoria }"
             >
               <option value="">Selecione uma categoria</option>
               <option v-for="categoria in categorias" :key="categoria" :value="categoria">
@@ -97,16 +85,13 @@
           </div>
         </div>
 
-        <div>
-          <label for="tipo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Tipo *
-          </label>
+        <div class="filter-group">
+          <label for="tipo">Tipo *</label>
           <select
             id="tipo"
             v-model="form.tipo"
             required
-            class="input-field mt-1"
-            :class="{ 'border-red-500': errors.tipo }"
+            :class="{ 'error': errors.tipo }"
           >
             <option value="">Selecione um tipo</option>
             <option v-for="tipo in tipos" :key="tipo" :value="tipo">
@@ -116,16 +101,16 @@
           <p v-if="errors.tipo" class="error-message">{{ errors.tipo }}</p>
         </div>
 
-        <div class="flex space-x-4 pt-6">
+        <div class="pagination">
           <button
             type="submit"
             :disabled="loading.update"
-            class="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            class="create-btn"
           >
-            <div v-if="loading.update" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            <div v-if="loading.update" class="spinner"></div>
             {{ loading.update ? 'Salvando...' : 'Salvar Alterações' }}
           </button>
-          <NuxtLink :to="`/projetos/${projetoId}`" class="btn-secondary flex-1 text-center">
+          <NuxtLink :to="`/projetos/${projetoId}`" class="page-btn">
             Cancelar
           </NuxtLink>
         </div>

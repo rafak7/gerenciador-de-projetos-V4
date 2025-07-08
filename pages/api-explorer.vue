@@ -1,239 +1,204 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="api-explorer">
     <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-        Servidor API - Explorer
-      </h1>
-      <p class="mt-2 text-gray-600 dark:text-gray-400">
-        Visualize e teste os endpoints GET disponíveis no servidor JSON (localhost:3001)
-      </p>
+    <div class="page-header">
+      <h1>Servidor API - Explorer</h1>
+      <p>Visualize e teste os endpoints GET disponíveis no servidor JSON (localhost:3001)</p>
     </div>
 
     <!-- Status da API -->
-    <div class="mb-6">
-      <div class="flex items-center space-x-2">
+    <div class="api-status">
+      <div class="status-indicator">
         <div :class="[
-          'w-3 h-3 rounded-full',
-          apiStatus === 'online' ? 'bg-green-500' : 'bg-red-500'
+          'status-dot',
+          apiStatus === 'online' ? 'online' : 'offline'
         ]"></div>
-        <span class="text-sm font-medium" :class="[
-          apiStatus === 'online' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+        <span :class="[
+          'status-text',
+          apiStatus === 'online' ? 'online' : 'offline'
         ]">
           API {{ apiStatus === 'online' ? 'Online' : 'Offline' }}
         </span>
-        <span class="text-sm text-gray-500 dark:text-gray-400">
-          - http://localhost:3001
-        </span>
+        <span class="status-url">- http://localhost:3001</span>
       </div>
     </div>
 
     
 
     <!-- Endpoints -->
-    <div class="grid gap-6">
+    <div class="endpoints-grid">
       <!-- Projetos -->
-      <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              GET /projetos
-            </h2>
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <div class="header-row">
+            <h2>GET /projetos</h2>
             <button
               @click="fetchProjects"
               :disabled="loading.projetos"
-              class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              class="execute-btn"
             >
-              <CommandLineIcon v-if="!loading.projetos" class="w-4 h-4 mr-2" />
-              <div v-else class="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              <CommandLineIcon v-if="!loading.projetos" class="btn-icon" />
+              <div v-else class="btn-icon spinner"></div>
               {{ loading.projetos ? 'Carregando...' : 'Executar' }}
             </button>
           </div>
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Lista todos os projetos disponíveis
-          </p>
+          <p class="endpoint-description">Lista todos os projetos disponíveis</p>
         </div>
-                 <div v-if="data.projetos" class="p-6">
-           <!-- Lista completa com destaque -->
-           <div class="bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-x-auto">
-             <div v-if="Array.isArray(data.projetos)">
-               <div class="mb-2 flex items-center justify-between">
-                 <span class="text-xs text-gray-500 dark:text-gray-400">
-                   {{ sortedProjects.length }} projeto{{ sortedProjects.length !== 1 ? 's' : '' }} encontrado{{ sortedProjects.length !== 1 ? 's' : '' }}
-                   <span v-if="projetosStore.lastCreatedProjetoId" class="text-yellow-600 dark:text-yellow-400">
-                     (último criado em destaque)
-                   </span>
-                 </span>
-                 <button 
-                   v-if="projetosStore.lastCreatedProjetoId"
-                   @click="clearHighlight"
-                   class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 underline"
-                 >
-                   limpar destaque
-                 </button>
-               </div>
-               <div v-for="(projeto, index) in sortedProjects" :key="projeto.id" class="mb-4 last:mb-0">
-                 <div :class="[
-                   'p-3 rounded-md border transition-all duration-300',
-                   isHighlightedProject(projeto.id) 
-                     ? 'bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-300 dark:border-green-700 shadow-md ring-2 ring-green-200 dark:ring-green-800' 
-                     : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:shadow-sm'
-                 ]">
-                   <div v-if="isHighlightedProject(projeto.id)" class="flex items-center justify-between mb-3">
-                     <span class="text-xs font-medium text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900/50 px-2 py-1 rounded-full flex items-center">
-                       🎉 Projeto recém-criado
-                     </span>
-                     <span class="text-xs text-green-600 dark:text-green-400 animate-pulse">
-                       NOVO
-                     </span>
-                   </div>
-                   <pre class="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{{ JSON.stringify(projeto, null, 2) }}</pre>
-                 </div>
-               </div>
-             </div>
-             <div v-else>
-               <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(data.projetos, null, 2) }}</pre>
-             </div>
-           </div>
-         </div>
+        <div v-if="data.projetos" class="endpoint-content">
+          <!-- Lista completa com destaque -->
+          <div class="response-container">
+            <div v-if="Array.isArray(data.projetos)">
+              <div class="response-meta">
+                <span class="item-count">
+                  {{ sortedProjects.length }} projeto{{ sortedProjects.length !== 1 ? 's' : '' }} encontrado{{ sortedProjects.length !== 1 ? 's' : '' }}
+                  <span v-if="projetosStore.lastCreatedProjetoId" class="highlight-text">
+                    (último criado em destaque)
+                  </span>
+                </span>
+                <button 
+                  v-if="projetosStore.lastCreatedProjetoId"
+                  @click="clearHighlight"
+                  class="clear-highlight"
+                >
+                  limpar destaque
+                </button>
+              </div>
+              <div v-for="(projeto, index) in sortedProjects" :key="projeto.id" class="project-item">
+                <div :class="[
+                  'project-wrapper',
+                  isHighlightedProject(projeto.id) ? 'highlighted' : ''
+                ]">
+                  <div v-if="isHighlightedProject(projeto.id)" class="highlight-badge">
+                    <span class="badge">
+                      🎉 Projeto recém-criado
+                    </span>
+                    <span class="new-indicator">
+                      NOVO
+                    </span>
+                  </div>
+                  <pre class="project-data">{{ JSON.stringify(projeto, null, 2) }}</pre>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <pre class="json-response">{{ JSON.stringify(data.projetos, null, 2) }}</pre>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Usuários -->
-      <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              GET /usuarios
-            </h2>
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <div class="header-row">
+            <h2>GET /usuarios</h2>
             <button
               @click="fetchUsers"
               :disabled="loading.usuarios"
-              class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              class="execute-btn"
             >
-              <CommandLineIcon v-if="!loading.usuarios" class="w-4 h-4 mr-2" />
-              <div v-else class="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              <CommandLineIcon v-if="!loading.usuarios" class="btn-icon" />
+              <div v-else class="btn-icon spinner"></div>
               {{ loading.usuarios ? 'Carregando...' : 'Executar' }}
             </button>
           </div>
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Lista todos os usuários cadastrados
-          </p>
+          <p class="endpoint-description">Lista todos os usuários cadastrados</p>
         </div>
-        <div v-if="data.usuarios" class="p-6">
-          <div class="bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-x-auto">
-            <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(data.usuarios, null, 2) }}</pre>
+        <div v-if="data.usuarios" class="endpoint-content">
+          <div class="response-container">
+            <pre class="json-response">{{ JSON.stringify(data.usuarios, null, 2) }}</pre>
           </div>
         </div>
       </div>
 
       <!-- Categorias -->
-      <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              GET /categorias
-            </h2>
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <div class="header-row">
+            <h2>GET /categorias</h2>
             <button
               @click="fetchCategories"
               :disabled="loading.categorias"
-              class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              class="execute-btn"
             >
-              <CommandLineIcon v-if="!loading.categorias" class="w-4 h-4 mr-2" />
-              <div v-else class="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              <CommandLineIcon v-if="!loading.categorias" class="btn-icon" />
+              <div v-else class="btn-icon spinner"></div>
               {{ loading.categorias ? 'Carregando...' : 'Executar' }}
             </button>
           </div>
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Lista todas as categorias disponíveis
-          </p>
+          <p class="endpoint-description">Lista todas as categorias disponíveis</p>
         </div>
-        <div v-if="data.categorias" class="p-6">
-          <div class="bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-x-auto">
-            <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(data.categorias, null, 2) }}</pre>
+        <div v-if="data.categorias" class="endpoint-content">
+          <div class="response-container">
+            <pre class="json-response">{{ JSON.stringify(data.categorias, null, 2) }}</pre>
           </div>
         </div>
       </div>
 
       <!-- Tipos -->
-      <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-              GET /tipos
-            </h2>
+      <div class="endpoint-card">
+        <div class="endpoint-header">
+          <div class="header-row">
+            <h2>GET /tipos</h2>
             <button
               @click="fetchTypes"
               :disabled="loading.tipos"
-              class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              class="execute-btn"
             >
-              <CommandLineIcon v-if="!loading.tipos" class="w-4 h-4 mr-2" />
-              <div v-else class="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              <CommandLineIcon v-if="!loading.tipos" class="btn-icon" />
+              <div v-else class="btn-icon spinner"></div>
               {{ loading.tipos ? 'Carregando...' : 'Executar' }}
             </button>
           </div>
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            Lista todos os tipos de projeto disponíveis
-          </p>
+          <p class="endpoint-description">Lista todos os tipos de projeto disponíveis</p>
         </div>
-        <div v-if="data.tipos" class="p-6">
-          <div class="bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-x-auto">
-            <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(data.tipos, null, 2) }}</pre>
+        <div v-if="data.tipos" class="endpoint-content">
+          <div class="response-container">
+            <pre class="json-response">{{ JSON.stringify(data.tipos, null, 2) }}</pre>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Seção de Teste Individual -->
-    <div class="mt-8 bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700">
-      <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Teste Endpoint Personalizado
-        </h2>
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Digite um endpoint para testar (ex: /projetos/1, /categorias?_limit=5)
-        </p>
+    <div class="custom-test">
+      <div class="test-header">
+        <h2>Teste Endpoint Personalizado</h2>
+        <p>Digite um endpoint para testar (ex: /projetos/1, /categorias?_limit=5)</p>
       </div>
-      <div class="p-6">
-        <div class="flex space-x-4">
-          <div class="flex-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Endpoint
-            </label>
-            <div class="flex">
-              <span class="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm rounded-l-md">
-                GET http://localhost:3001
-              </span>
+      <div class="test-content">
+        <div class="test-form">
+          <div class="endpoint-input">
+            <label>Endpoint</label>
+            <div class="input-group">
+              <span class="input-prefix">GET http://localhost:3001</span>
               <input
                 v-model="customEndpoint"
                 type="text"
-                class="flex-1 border border-gray-300 dark:border-gray-600 rounded-r-md px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                class="endpoint-field"
                 placeholder="/projetos"
               />
             </div>
           </div>
-          <div class="flex items-end">
-            <button
-              @click="fetchCustomEndpoint"
-              :disabled="loading.custom || !customEndpoint"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
-            >
-              <CommandLineIcon v-if="!loading.custom" class="w-4 h-4 mr-2" />
-              <div v-else class="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-              {{ loading.custom ? 'Executando...' : 'Executar' }}
-            </button>
-          </div>
+          <button
+            @click="fetchCustomEndpoint"
+            :disabled="loading.custom || !customEndpoint"
+            class="test-button"
+          >
+            <CommandLineIcon v-if="!loading.custom" class="btn-icon" />
+            <div v-else class="btn-icon spinner"></div>
+            {{ loading.custom ? 'Executando...' : 'Executar' }}
+          </button>
         </div>
         
-        <div v-if="data.custom" class="mt-4">
-          <div class="bg-gray-50 dark:bg-gray-900 rounded-md p-4 overflow-x-auto">
-            <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(data.custom, null, 2) }}</pre>
-          </div>
+        <div v-if="data.custom" class="test-response">
+          <pre class="json-response">{{ JSON.stringify(data.custom, null, 2) }}</pre>
         </div>
 
-        <div v-if="error.custom" class="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-          <p class="text-sm text-red-600 dark:text-red-400">
-            {{ error.custom }}
-          </p>
+        <div v-if="error.custom" class="error-state">
+          <div class="error-content">
+            <p>{{ error.custom }}</p>
+          </div>
         </div>
       </div>
     </div>

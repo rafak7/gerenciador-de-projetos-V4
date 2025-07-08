@@ -18,11 +18,11 @@ export const useProjetosStore = defineStore('projetos', () => {
     currentPage: 1,
     totalPages: 1,
     totalItems: 0,
-    itemsPerPage: 6
+    itemsPerPage: 12
   })
   const filters = ref<FilterOptions>({
     page: 1,
-    limit: 6,
+    limit: 12,
     sortBy: 'nome',
     sortOrder: 'asc'
   })
@@ -64,7 +64,7 @@ export const useProjetosStore = defineStore('projetos', () => {
 
       // Implementar paginação no lado cliente
       const currentPage = filters.value.page || 1
-      const itemsPerPage = filters.value.limit || 6
+      const itemsPerPage = filters.value.limit || 12
       const startIndex = (currentPage - 1) * itemsPerPage
       const endIndex = startIndex + itemsPerPage
 

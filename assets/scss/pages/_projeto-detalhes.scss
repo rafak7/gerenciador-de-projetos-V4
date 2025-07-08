@@ -1,0 +1,728 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Página de detalhes do projeto
+.projeto-detalhes {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  @media (max-width: $tablet) {
+    padding: $spacing-md;
+  }
+}
+
+// Breadcrumb
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-lg;
+  font-size: 14px;
+  color: $text-light;
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $primary-color;
+    text-decoration: none;
+    transition: all $transition-normal;
+
+    &:hover {
+      color: $primary-dark;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      transform: rotate(180deg);
+    }
+  }
+
+  .breadcrumb-separator {
+    color: $text-light;
+  }
+
+  .breadcrumb-current {
+    color: $text-dark;
+    font-weight: 500;
+    @include text-truncate;
+    max-width: 200px;
+  }
+}
+
+// Hero Section
+.projeto-hero {
+  position: relative;
+  background: $bg-white;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  box-shadow: $shadow-lg;
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.03;
+
+    .hero-gradient {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, $primary-color 0%, $success-color 100%);
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-lg;
+
+    @media (max-width: $tablet) {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+
+  .hero-info {
+    flex: 1;
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-xs;
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-full;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: $spacing-sm;
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0 0 $spacing-md 0;
+      line-height: 1.2;
+
+      @media (max-width: $tablet) {
+        font-size: 24px;
+      }
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+
+      @media (max-width: $mobile) {
+        flex-direction: column;
+        gap: $spacing-sm;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+
+        svg {
+          width: 18px;
+          height: 18px;
+          color: $text-light;
+        }
+
+        .tag {
+          background: rgba($primary-color, 0.1);
+          color: $primary-color;
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-sm;
+          font-size: 12px;
+          font-weight: 600;
+        }
+
+        .categoria-tag {
+          background: rgba($success-color, 0.1);
+          color: $success-color;
+        }
+
+        .tipo-tag {
+          background: rgba($warning-color, 0.1);
+          color: $warning-color;
+        }
+
+        .price-display {
+          font-size: 18px;
+          font-weight: 700;
+          color: $success-color;
+        }
+      }
+    }
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: $spacing-sm;
+
+    @media (max-width: $tablet) {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    @media (max-width: $mobile) {
+      flex-direction: column;
+    }
+
+    .hero-btn {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-md;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all $transition-normal;
+      white-space: nowrap;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &.primary {
+        background: $primary-color;
+        color: white;
+
+        &:hover {
+          background: $primary-dark;
+          transform: translateY(-1px);
+          box-shadow: $shadow-md;
+        }
+      }
+
+      &.danger {
+        background: rgba($danger-color, 0.1);
+        color: $danger-color;
+        border: 1px solid rgba($danger-color, 0.2);
+
+        &:hover {
+          background: $danger-color;
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: $shadow-md;
+        }
+      }
+    }
+  }
+}
+
+// Statistics Grid
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+
+  @media (max-width: $tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+
+  @media (max-width: $mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  background: $bg-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-light;
+  transition: all $transition-normal;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transition: all $transition-normal;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  &.revenue::before {
+    background: linear-gradient(90deg, $success-color, #22c55e);
+  }
+
+  &.category::before {
+    background: linear-gradient(90deg, $primary-color, #60a5fa);
+  }
+
+  &.type::before {
+    background: linear-gradient(90deg, $warning-color, #fbbf24);
+  }
+
+  &.timeline::before {
+    background: linear-gradient(90deg, $info-color, #38bdf8);
+  }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $spacing-md;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &.revenue .stat-icon {
+    background: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
+  &.category .stat-icon {
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+  }
+
+  &.type .stat-icon {
+    background: rgba($warning-color, 0.1);
+    color: $warning-color;
+  }
+
+  &.timeline .stat-icon {
+    background: rgba($info-color, 0.1);
+    color: $info-color;
+  }
+
+  .stat-content {
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-dark;
+      margin-bottom: $spacing-xs;
+      @include text-truncate;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: $text-light;
+      font-weight: 500;
+    }
+  }
+}
+
+// Main Layout
+.projeto-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-xl;
+
+  @media (max-width: $desktop-sm) {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+}
+
+// Detail Cards
+.detail-card {
+  background: $bg-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-light;
+  overflow: hidden;
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .card-header {
+    padding: $spacing-lg $spacing-lg $spacing-md;
+    border-bottom: 1px solid $border-light;
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      font-size: 18px;
+      font-weight: 600;
+      color: $text-dark;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        color: $primary-color;
+      }
+    }
+  }
+
+  .card-content {
+    padding: $spacing-lg;
+  }
+}
+
+// Description Card
+.description-card {
+  .description-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: $text-dark;
+    margin: 0;
+  }
+}
+
+// Specs Card
+.specs-card {
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+
+    @media (max-width: $mobile) {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+
+    .spec-item {
+      .spec-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: $text-light;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: $spacing-xs;
+      }
+
+      .spec-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: $text-dark;
+      }
+    }
+  }
+}
+
+// Actions Card
+.actions-card {
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    .action-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      padding: $spacing-md;
+      border-radius: $border-radius-md;
+      border: 1px solid $border-light;
+      text-decoration: none;
+      background: none;
+      cursor: pointer;
+      transition: all $transition-normal;
+      width: 100%;
+
+      &:hover {
+        background: rgba($primary-color, 0.05);
+        border-color: $primary-color;
+        transform: translateX(2px);
+      }
+
+      .action-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: $border-radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      &.edit .action-icon {
+        background: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+
+      &.duplicate .action-icon {
+        background: rgba($info-color, 0.1);
+        color: $info-color;
+      }
+
+      &.export .action-icon {
+        background: rgba($warning-color, 0.1);
+        color: $warning-color;
+      }
+
+      &.back .action-icon {
+        background: rgba($text-light, 0.1);
+        color: $text-light;
+      }
+
+      .action-text {
+        flex: 1;
+        text-align: left;
+
+        .action-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: $text-dark;
+          margin-bottom: 2px;
+        }
+
+        .action-subtitle {
+          font-size: 12px;
+          color: $text-light;
+        }
+      }
+    }
+  }
+}
+
+// Timeline Card
+.timeline-card {
+  .timeline {
+    position: relative;
+    padding-left: $spacing-lg;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: $border-light;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: $spacing-lg;
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        left: -12px;
+        top: 4px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 3px solid $border-light;
+        background: $bg-white;
+        z-index: 1;
+      }
+
+      &.completed .timeline-marker {
+        background: $success-color;
+        border-color: $success-color;
+      }
+
+      &.current .timeline-marker {
+        background: $primary-color;
+        border-color: $primary-color;
+        animation: pulse 2s infinite;
+      }
+
+      &.pending .timeline-marker {
+        background: $bg-white;
+        border-color: $border-light;
+      }
+
+      .timeline-content {
+        .timeline-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: $text-dark;
+          margin-bottom: 2px;
+        }
+
+        .timeline-date {
+          font-size: 12px;
+          color: $text-light;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($primary-color, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($primary-color, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($primary-color, 0);
+  }
+}
+
+// Dark Mode
+.dark {
+  .projeto-detalhes {
+    .breadcrumb {
+      color: $text-dark-light;
+
+      .breadcrumb-current {
+        color: $text-dark-primary;
+      }
+    }
+
+    .projeto-hero {
+      background: $bg-dark-secondary;
+
+      .hero-info {
+        .hero-title {
+          color: $text-dark-primary;
+        }
+
+        .project-meta {
+          .meta-item {
+            svg {
+              color: $text-dark-light;
+            }
+          }
+        }
+      }
+    }
+
+    .stat-card {
+      background: $bg-dark-secondary;
+      border-color: rgba(255, 255, 255, 0.1);
+
+      .stat-content {
+        .stat-value {
+          color: $text-dark-primary;
+        }
+
+        .stat-label {
+          color: $text-dark-light;
+        }
+      }
+    }
+
+    .detail-card {
+      background: $bg-dark-secondary;
+      border-color: rgba(255, 255, 255, 0.1);
+
+      .card-header {
+        border-color: rgba(255, 255, 255, 0.1);
+
+        .card-title {
+          color: $text-dark-primary;
+        }
+      }
+    }
+
+    .description-card {
+      .description-text {
+        color: $text-dark-primary;
+      }
+    }
+
+    .specs-card {
+      .spec-item {
+        .spec-label {
+          color: $text-dark-light;
+        }
+
+        .spec-value {
+          color: $text-dark-primary;
+        }
+      }
+    }
+
+    .actions-card {
+      .action-item {
+        border-color: rgba(255, 255, 255, 0.1);
+
+        &:hover {
+          background: rgba($primary-color, 0.1);
+        }
+
+        .action-text {
+          .action-title {
+            color: $text-dark-primary;
+          }
+
+          .action-subtitle {
+            color: $text-dark-light;
+          }
+        }
+      }
+    }
+
+    .timeline-card {
+      .timeline {
+        &::before {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item {
+          .timeline-marker {
+            background: $bg-dark-secondary;
+            border-color: rgba(255, 255, 255, 0.1);
+          }
+
+          &.completed .timeline-marker {
+            background: $success-color;
+            border-color: $success-color;
+          }
+
+          &.current .timeline-marker {
+            background: $primary-color;
+            border-color: $primary-color;
+          }
+
+          .timeline-content {
+            .timeline-title {
+              color: $text-dark-primary;
+            }
+
+            .timeline-date {
+              color: $text-dark-light;
+            }
+          }
+        }
+      }
+    }
+  }
+} 
