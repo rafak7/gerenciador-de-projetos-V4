@@ -102,9 +102,27 @@ export const useProjetosStore = defineStore('projetos', () => {
     error.value = null
 
     try {
+      // Buscar todos os projetos para determinar o próximo ID
+      const allProjetos = await $fetch<Projeto[]>(`${config.public.apiBase}/projetos`)
+      
+      // Encontrar o maior ID numérico existente
+      let maxId = 0
+      allProjetos.forEach(projeto => {
+        const id = parseInt(projeto.id.toString())
+        if (!isNaN(id) && id > maxId) {
+          maxId = id
+        }
+      })
+      
+      // Gerar próximo ID sequencial
+      const nextId = (maxId + 1).toString()
+      
+      // Criar projeto com ID sequencial
+      const projetoComId = { ...data, id: nextId }
+
       const newProjeto = await $fetch<Projeto>(`${config.public.apiBase}/projetos`, {
         method: 'POST',
-        body: data
+        body: projetoComId
       })
 
       // Atualizar lista local
