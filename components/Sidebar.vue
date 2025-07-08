@@ -92,7 +92,8 @@
 import {
   FolderIcon,
   PlusIcon,
-  HomeIcon
+  HomeIcon,
+  CommandLineIcon
 } from '@heroicons/vue/24/outline'
 
 // Props
@@ -126,6 +127,12 @@ const navigation = computed(() => [
     href: '/projetos/novo',
     icon: PlusIcon,
     current: route.path === '/projetos/novo'
+  },
+  {
+    name: 'Servidor API',
+    href: '/api-explorer',
+    icon: CommandLineIcon,
+    current: route.path === '/api-explorer'
   }
 ])
 </script> 

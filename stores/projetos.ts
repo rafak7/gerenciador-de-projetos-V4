@@ -5,6 +5,7 @@ export const useProjetosStore = defineStore('projetos', () => {
   // State
   const projetos = ref<Projeto[]>([])
   const currentProjeto = ref<Projeto | null>(null)
+  const lastCreatedProjetoId = ref<string | null>(null)
   const loading = ref({
     list: false,
     single: false,
@@ -109,6 +110,9 @@ export const useProjetosStore = defineStore('projetos', () => {
       // Atualizar lista local
       projetos.value.unshift(newProjeto)
       
+      // Armazenar ID do último projeto criado
+      lastCreatedProjetoId.value = newProjeto.id.toString()
+      
       return newProjeto
     } catch (err: any) {
       error.value = err.message || 'Erro ao criar projeto'
@@ -189,6 +193,10 @@ export const useProjetosStore = defineStore('projetos', () => {
     currentProjeto.value = null
   }
 
+  const clearLastCreatedHighlight = () => {
+    lastCreatedProjetoId.value = null
+  }
+
   // Getters
   const isLoading = computed(() => Object.values(loading.value).some(l => l))
   const totalProjetos = computed(() => pagination.value.totalItems)
@@ -199,6 +207,7 @@ export const useProjetosStore = defineStore('projetos', () => {
     // State
     projetos: readonly(projetos),
     currentProjeto: readonly(currentProjeto),
+    lastCreatedProjetoId: readonly(lastCreatedProjetoId),
     loading: readonly(loading),
     error: readonly(error),
     pagination: readonly(pagination),
@@ -213,6 +222,7 @@ export const useProjetosStore = defineStore('projetos', () => {
     setFilters,
     clearError,
     resetCurrentProjeto,
+    clearLastCreatedHighlight,
     
     // Getters
     isLoading,

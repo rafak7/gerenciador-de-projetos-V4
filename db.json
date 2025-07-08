@@ -39,6 +39,22 @@
       "preco": 80000,
       "tipo": "Web Development",
       "categoria": "Saúde"
+    },
+    {
+      "id": "25b5",
+      "nome": "Rafael Lino",
+      "descricao": "Teste mark",
+      "preco": 10000,
+      "categoria": "IoT",
+      "tipo": "API Development"
+    },
+    {
+      "id": "3b32",
+      "nome": "New",
+      "descricao": "Newsadasddasdsa",
+      "preco": 1212121,
+      "categoria": "CRM",
+      "tipo": "API Development"
     }
   ],
   "usuarios": [
