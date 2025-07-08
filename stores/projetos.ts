@@ -41,10 +41,8 @@ export const useProjetosStore = defineStore('projetos', () => {
         filters.value = { ...filters.value, ...options }
       }
 
-      // Construir query parameters
+      // Buscar TODOS os projetos primeiro
       const queryParams: Record<string, string> = {
-        _page: filters.value.page?.toString() || '1',
-        _limit: filters.value.limit?.toString() || '6',
         _sort: filters.value.sortBy || 'nome',
         _order: filters.value.sortOrder || 'asc'
       }
@@ -60,19 +58,36 @@ export const useProjetosStore = defineStore('projetos', () => {
         queryParams.tipo = filters.value.tipo
       }
 
-      const response = await $fetch<Projeto[]>(`${config.public.apiBase}/projetos`, {
+      const allFilteredProjects = await $fetch<Projeto[]>(`${config.public.apiBase}/projetos`, {
         query: queryParams
       })
 
-      projetos.value = response
+      // Implementar paginação no lado cliente
+      const currentPage = filters.value.page || 1
+      const itemsPerPage = filters.value.limit || 6
+      const startIndex = (currentPage - 1) * itemsPerPage
+      const endIndex = startIndex + itemsPerPage
 
-      // Simular paginação (json-server fornece headers mas vamos calcular)
-      const totalItems = await $fetch<Projeto[]>(`${config.public.apiBase}/projetos`)
+      // Paginar os resultados
+      projetos.value = allFilteredProjects.slice(startIndex, endIndex)
+
+      // Calcular paginação
+      const totalPages = Math.ceil(allFilteredProjects.length / itemsPerPage)
+      const validCurrentPage = totalPages > 0 ? Math.min(currentPage, totalPages) : 1
+      
+      // Se recalculamos a página válida, usar ela para repaginar
+      if (validCurrentPage !== currentPage) {
+        filters.value.page = validCurrentPage
+        const newStartIndex = (validCurrentPage - 1) * itemsPerPage
+        const newEndIndex = newStartIndex + itemsPerPage
+        projetos.value = allFilteredProjects.slice(newStartIndex, newEndIndex)
+      }
+      
       pagination.value = {
-        currentPage: filters.value.page || 1,
-        totalPages: Math.ceil(totalItems.length / (filters.value.limit || 6)),
-        totalItems: totalItems.length,
-        itemsPerPage: filters.value.limit || 6
+        currentPage: validCurrentPage,
+        totalPages: totalPages,
+        totalItems: allFilteredProjects.length,
+        itemsPerPage: itemsPerPage
       }
     } catch (err: any) {
       error.value = err.message || 'Erro ao carregar projetos'
@@ -218,8 +233,12 @@ export const useProjetosStore = defineStore('projetos', () => {
   // Getters
   const isLoading = computed(() => Object.values(loading.value).some(l => l))
   const totalProjetos = computed(() => pagination.value.totalItems)
-  const hasNextPage = computed(() => pagination.value.currentPage < pagination.value.totalPages)
-  const hasPrevPage = computed(() => pagination.value.currentPage > 1)
+  const hasNextPage = computed(() => {
+    return pagination.value.totalPages > 0 && pagination.value.currentPage < pagination.value.totalPages
+  })
+  const hasPrevPage = computed(() => {
+    return pagination.value.totalPages > 0 && pagination.value.currentPage > 1
+  })
 
   return {
     // State

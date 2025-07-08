@@ -47,6 +47,22 @@
       "preco": 1000,
       "categoria": "Educação",
       "tipo": "Desktop Development"
+    },
+    {
+      "id": "e33c",
+      "nome": "abracadabra",
+      "descricao": "testefix: corrige geração de IDs aleatórios na criação de projetosfix: corrige geração de IDs aleatórios na criação de projetos",
+      "preco": 12322,
+      "categoria": "CRM",
+      "tipo": "Data Science"
+    },
+    {
+      "id": "7729",
+      "nome": "dasdasdasdasda",
+      "descricao": "sdasdasdasdasd",
+      "preco": 11111,
+      "categoria": "CRM",
+      "tipo": "Desktop Development"
     }
   ],
   "usuarios": [

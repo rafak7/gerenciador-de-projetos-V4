@@ -204,8 +204,7 @@ const loadProjetos = () => {
     search: searchTerm.value || undefined,
     categoria: selectedCategoria.value || undefined,
     tipo: selectedTipo.value || undefined,
-    sortBy: sortBy.value as any,
-    page: pagination.value.currentPage
+    sortBy: sortBy.value as any
   })
 }
 
@@ -240,27 +239,45 @@ const handleDelete = async (id: number) => {
   const success = await deleteProjeto(id)
   if (success) {
     showSuccess('Projeto excluído', 'O projeto foi removido com sucesso')
+    // Recarregar projetos após exclusão para atualizar paginação
+    loadProjetos()
   } else {
     showError('Erro ao excluir', 'Não foi possível excluir o projeto')
   }
 }
 
-const nextPage = () => {
+const nextPage = async () => {
   if (hasNextPage.value) {
-    setFilters({ page: pagination.value.currentPage + 1 })
-    loadProjetos()
+    const newPage = pagination.value.currentPage + 1
+    await fetchProjetos({
+      search: searchTerm.value || undefined,
+      categoria: selectedCategoria.value || undefined,
+      tipo: selectedTipo.value || undefined,
+      sortBy: sortBy.value as any,
+      page: newPage
+    })
   }
 }
 
-const prevPage = () => {
+const prevPage = async () => {
   if (hasPrevPage.value) {
-    setFilters({ page: pagination.value.currentPage - 1 })
-    loadProjetos()
+    const newPage = pagination.value.currentPage - 1
+    await fetchProjetos({
+      search: searchTerm.value || undefined,
+      categoria: selectedCategoria.value || undefined,
+      tipo: selectedTipo.value || undefined,
+      sortBy: sortBy.value as any,
+      page: newPage
+    })
   }
 }
 
 // Watchers
-watchDebounced([searchTerm, selectedCategoria, selectedTipo, sortBy], loadProjetos, { debounce: 300 })
+watchDebounced([searchTerm, selectedCategoria, selectedTipo, sortBy], () => {
+  // Resetar para página 1 quando filtros mudarem
+  setFilters({ page: 1 })
+  loadProjetos()
+}, { debounce: 300 })
 
 // Lifecycle
 onMounted(async () => {
