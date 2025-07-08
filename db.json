@@ -65,12 +65,12 @@
       "tipo": "Data Science"
     },
     {
-      "id": "11",
-      "nome": "Sistema Uber Eats",
+      "nome": "Sistema Uber Eatss",
       "descricao": "Sistema Uber Eats Teste ",
       "preco": 5000,
       "categoria": "IoT",
-      "tipo": "DevOps"
+      "tipo": "DevOps",
+      "id": "11"
     }
   ],
   "usuarios": [

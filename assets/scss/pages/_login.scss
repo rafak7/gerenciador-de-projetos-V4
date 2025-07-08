@@ -1,0 +1,383 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Container principal da página de login
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.05) 0%, 
+    rgba(99, 102, 241, 0.05) 50%, 
+    rgba(139, 92, 246, 0.05) 100%
+  );
+  position: relative;
+  
+  &.dark {
+    background: linear-gradient(135deg, 
+      rgba(17, 24, 39, 0.95) 0%, 
+      rgba(31, 41, 55, 0.95) 50%, 
+      rgba(55, 65, 81, 0.95) 100%
+    );
+  }
+}
+
+// Botão de alternância de tema
+.theme-toggle {
+  position: absolute;
+  top: $spacing-lg;
+  right: $spacing-lg;
+  z-index: 10;
+  
+  .theme-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-radius: $border-radius-full;
+    color: $text-dark;
+    cursor: pointer;
+    transition: all $transition-normal;
+    backdrop-filter: blur(10px);
+    box-shadow: $shadow-sm;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: scale(1.05);
+      box-shadow: $shadow-md;
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    .theme-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform $transition-normal;
+    }
+    
+    // Dark mode
+    .dark & {
+      background: rgba(31, 41, 55, 0.9);
+      border-color: rgba(75, 85, 99, 0.5);
+      color: $text-dark-primary;
+      
+      &:hover {
+        background: rgba(31, 41, 55, 1);
+      }
+    }
+  }
+}
+
+// Container do formulário
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: $spacing-lg;
+}
+
+// Card do formulário de login
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  border-radius: $border-radius-xl;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: $spacing-xl;
+  transition: all $transition-normal;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 35px 60px -12px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+  
+  // Dark mode
+  .dark & {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: rgba(75, 85, 99, 0.6);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(75, 85, 99, 0.2);
+    
+    &:hover {
+      box-shadow: 
+        0 35px 60px -12px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(75, 85, 99, 0.3);
+    }
+  }
+}
+
+// Header do login
+.login-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  
+  .login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $text-dark;
+    margin-bottom: $spacing-sm;
+    background: linear-gradient(135deg, $primary-color, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    .dark & {
+      color: $text-dark-primary;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+  
+  .login-subtitle {
+    color: $text-light;
+    font-size: 0.95rem;
+    
+    .dark & {
+      color: $text-dark-light;
+    }
+  }
+}
+
+// Formulário de login
+.login-form {
+  .form-group {
+    margin-bottom: $spacing-lg;
+    
+    .form-label {
+      display: block;
+      margin-bottom: $spacing-sm;
+      font-weight: 600;
+      color: $text-dark;
+      font-size: 0.9rem;
+      
+      .dark & {
+        color: $text-dark-primary;
+      }
+    }
+    
+    .login-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid $border-color;
+      border-radius: $border-radius-md;
+      font-size: 0.95rem;
+      background: $bg-white;
+      color: $text-dark;
+      transition: all $transition-normal;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        transform: translateY(-1px);
+      }
+      
+      &.error {
+        border-color: $danger-color;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+      
+      &::placeholder {
+        color: $text-light;
+      }
+      
+      // Dark mode
+      .dark & {
+        background: $bg-dark;
+        border-color: $border-dark;
+        color: $text-dark-primary;
+        
+        &:focus {
+          border-color: #60a5fa;
+          box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+        
+        &.error {
+          border-color: #f87171;
+          box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1);
+        }
+        
+        &::placeholder {
+          color: $text-dark-light;
+        }
+      }
+    }
+    
+    .error-message {
+      color: $danger-color;
+      font-size: 0.8rem;
+      margin-top: $spacing-xs;
+      font-weight: 500;
+      
+      .dark & {
+        color: #f87171;
+      }
+    }
+  }
+}
+
+// Botão de login
+.login-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: $text-white;
+  border: none;
+  border-radius: $border-radius-md;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all $transition-normal;
+  margin-bottom: $spacing-lg;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $primary-dark, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid $text-white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: $spacing-sm;
+  }
+  
+  // Dark mode
+  .dark & {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      box-shadow: 0 10px 25px rgba(96, 165, 250, 0.3);
+    }
+  }
+}
+
+// Credenciais de teste
+.login-credentials {
+  text-align: center;
+  padding: $spacing-md;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: $border-radius-md;
+  margin-top: $spacing-lg;
+  
+  .credentials-title {
+    font-size: 0.85rem;
+    color: $text-light;
+    margin-bottom: $spacing-sm;
+    font-weight: 500;
+    
+    .dark & {
+      color: $text-dark-light;
+    }
+  }
+  
+  .credentials-list {
+    font-size: 0.8rem;
+    color: $text-dark;
+    font-family: 'Courier New', monospace;
+    
+    .credential-item {
+      margin-bottom: $spacing-xs;
+      
+      .email {
+        color: $primary-color;
+        font-weight: 600;
+      }
+      
+      .password {
+        color: $secondary-color;
+        font-weight: 600;
+      }
+    }
+    
+    .dark & {
+      color: $text-dark-primary;
+      
+      .credential-item {
+        .email {
+          color: #60a5fa;
+        }
+        
+        .password {
+          color: #9ca3af;
+        }
+      }
+    }
+  }
+  
+  // Dark mode
+  .dark & {
+    background: rgba(75, 85, 99, 0.2);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+}
+
+// Footer
+.login-footer {
+  text-align: center;
+  margin-top: $spacing-xl;
+  
+  .copyright {
+    font-size: 0.8rem;
+    color: $text-light;
+    
+    .dark & {
+      color: $text-dark-light;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsividade
+@media (max-width: $mobile) {
+  .login-container {
+    padding: $spacing-md;
+  }
+  
+  .login-card {
+    padding: $spacing-lg;
+  }
+  
+  .login-header .login-title {
+    font-size: 1.75rem;
+  }
+} 

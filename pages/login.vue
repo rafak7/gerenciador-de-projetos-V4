@@ -1,61 +1,59 @@
 <template>
-  <div>
-    <form @submit.prevent="handleLogin" class="space-y-6">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+  <div class="login-form">
+    <form @submit.prevent="handleLogin">
+      <div class="form-group">
+        <label for="email" class="form-label">
           Email
         </label>
-        <div class="mt-1">
-          <input
-            id="email"
-            v-model="form.email"
-            type="email"
-            autocomplete="email"
-            required
-            class="input-field"
-            :class="{ 'border-red-500': errors.email }"
-            placeholder="seu@email.com"
-          />
-          <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
-        </div>
+        <input
+          id="email"
+          v-model="form.email"
+          type="email"
+          autocomplete="email"
+          required
+          class="login-input"
+          :class="{ error: errors.email }"
+          placeholder="seu@email.com"
+        />
+        <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
       </div>
 
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+      <div class="form-group">
+        <label for="password" class="form-label">
           Senha
         </label>
-        <div class="mt-1">
-          <input
-            id="password"
-            v-model="form.senha"
-            type="password"
-            autocomplete="current-password"
-            required
-            class="input-field"
-            :class="{ 'border-red-500': errors.senha }"
-            placeholder="Sua senha"
-          />
-          <p v-if="errors.senha" class="error-message">{{ errors.senha }}</p>
+        <input
+          id="password"
+          v-model="form.senha"
+          type="password"
+          autocomplete="current-password"
+          required
+          class="login-input"
+          :class="{ error: errors.senha }"
+          placeholder="Sua senha"
+        />
+        <p v-if="errors.senha" class="error-message">{{ errors.senha }}</p>
+      </div>
+
+      <button
+        type="submit"
+        :disabled="isLoading"
+        class="login-button"
+      >
+        <div v-if="isLoading" class="loading-spinner"></div>
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <div class="login-credentials">
+        <p class="credentials-title">Credenciais de teste:</p>
+        <div class="credentials-list">
+          <div class="credential-item">
+            <span class="email">admin@gerenciador.com</span> / <span class="password">admin123</span>
+          </div>
+          <div class="credential-item">
+            <span class="email">user@gerenciador.com</span> / <span class="password">user123</span>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          :disabled="isLoading"
-          class="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-        >
-          <div v-if="isLoading" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-          {{ isLoading ? 'Entrando...' : 'Entrar' }}
-        </button>
-      </div>
-
-      <div class="text-center">
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          Credenciais de teste:<br>
-          <strong>admin@gerenciador.com</strong> / <strong>admin123</strong><br>
-          <strong>user@gerenciador.com</strong> / <strong>user123</strong>
-        </p>
       </div>
     </form>
   </div>
