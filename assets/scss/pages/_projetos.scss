@@ -1,0 +1,757 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Página de projetos
+.projetos-page {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    .header-content {
+      h1 {
+        font-size: 32px;
+        font-weight: bold;
+        color: $text-dark;
+        margin: 0 0 $spacing-xs 0;
+      }
+      
+      p {
+        color: $text-light;
+        margin: 0;
+      }
+    }
+    
+    .new-project-btn {
+      @include btn-primary;
+      
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-right: $spacing-sm;
+      }
+    }
+  }
+  
+  .filters-card {
+    @include card;
+    margin-bottom: $spacing-lg;
+    
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $spacing-md;
+      
+      .filter-group {
+        @include form-group;
+        
+        label {
+          @include form-label;
+        }
+        
+        input, select {
+          @include input-field;
+        }
+      }
+    }
+  }
+  
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: $spacing-xl 0;
+    
+    .spinner {
+      @include loading-spinner;
+    }
+  }
+  
+  .error-state {
+    @include card;
+    border-color: $danger-color;
+    background-color: rgba(239, 68, 68, 0.1);
+    
+    .error-content {
+      color: $danger-color;
+      
+      h3 {
+        font-weight: 500;
+        margin: 0 0 $spacing-xs 0;
+      }
+      
+      p {
+        font-size: 14px;
+        margin: 0 0 $spacing-md 0;
+      }
+      
+      .retry-btn {
+        @include btn-primary;
+      }
+    }
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+    
+    @media (max-width: $tablet) {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+    }
+  }
+  
+  .project-card {
+    background: linear-gradient(135deg, $bg-white 0%, #fafbfc 100%);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    padding: $spacing-lg;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    cursor: pointer;
+    
+    // Gradiente sutil no topo
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, $primary-color, #06b6d4, #10b981);
+      border-radius: 16px 16px 0 0;
+    }
+    
+    // Glow effect sutil
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(16, 185, 129, 0.02));
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity $transition-normal;
+      pointer-events: none;
+    }
+    
+    &:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 10px 20px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.2);
+      
+      &::after {
+        opacity: 1;
+      }
+      
+      .project-info h3 {
+        color: $primary-color;
+      }
+      
+      .price {
+        transform: scale(1.05);
+      }
+      
+      .tags .tag {
+        transform: scale(1.05);
+      }
+    }
+    
+    .project-info {
+      margin-bottom: $spacing-md;
+      position: relative;
+      z-index: 2;
+      
+      h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: $text-dark;
+        margin: 0 0 $spacing-sm 0;
+        line-height: 1.3;
+        transition: color $transition-normal;
+        
+        // Limite de linhas para títulos longos
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      
+      .description {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 42px; // Altura consistente para 2 linhas
+      }
+    }
+    
+    .project-details {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: $spacing-lg;
+      position: relative;
+      z-index: 2;
+      
+      .price {
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(135deg, $success-color, #059669);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: transform $transition-normal;
+        line-height: 1;
+        letter-spacing: -0.5px;
+      }
+      
+      .tags {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        align-items: flex-end;
+        
+        .tag {
+          padding: 6px 12px;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          transition: all $transition-normal;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          
+          &.categoria {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.1));
+            color: #3730a3;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+          }
+          
+          &.tipo {
+            background: linear-gradient(135deg, rgba(107, 114, 128, 0.12), rgba(75, 85, 99, 0.08));
+            color: #374151;
+            border: 1px solid rgba(107, 114, 128, 0.2);
+          }
+        }
+      }
+    }
+    
+    .project-actions {
+      display: flex;
+      gap: $spacing-sm;
+      position: relative;
+      z-index: 2;
+      
+      .action-btn {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        border: 1.5px solid transparent;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        
+        // Efeito de brilho
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+          transition: left 0.5s;
+        }
+        
+        &:hover::before {
+          left: 100%;
+        }
+        
+        &.view-btn {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.08));
+          color: #1e40af;
+          border-color: rgba(59, 130, 246, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-xs;
+          font-weight: 600;
+          
+          &:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.15));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+          }
+          
+          svg {
+            width: 18px;
+            height: 18px;
+            transition: transform $transition-normal;
+            flex-shrink: 0;
+          }
+          
+          .view-text {
+            font-size: 14px;
+            transition: opacity $transition-normal;
+            
+            @media (max-width: 480px) {
+              display: none;
+            }
+          }
+          
+          &:hover svg {
+            transform: scale(1.1);
+          }
+          
+          // Em telas muito pequenas, só mostra o ícone
+          @media (max-width: 480px) {
+            padding: 12px;
+            min-width: 48px;
+          }
+        }
+        
+        &.edit-btn {
+          background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.08));
+          color: #b45309;
+          border-color: rgba(245, 158, 11, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-xs;
+          font-weight: 600;
+          
+          &:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.15));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(245, 158, 11, 0.2);
+          }
+          
+          svg {
+            width: 18px;
+            height: 18px;
+            transition: transform $transition-normal;
+            flex-shrink: 0;
+          }
+          
+          .edit-text {
+            font-size: 14px;
+            transition: opacity $transition-normal;
+            
+            @media (max-width: 480px) {
+              display: none;
+            }
+          }
+          
+          &:hover svg {
+            transform: scale(1.1) rotate(5deg);
+          }
+          
+          // Em telas muito pequenas, só mostra o ícone
+          @media (max-width: 480px) {
+            padding: 12px;
+            min-width: 48px;
+          }
+        }
+        
+        &.delete-btn {
+          background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.08));
+          color: #b91c1c;
+          border-color: rgba(239, 68, 68, 0.3);
+          padding: 12px 16px;
+          flex: 0 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-xs;
+          font-weight: 600;
+          
+          &:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.15));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(239, 68, 68, 0.2);
+          }
+          
+          svg {
+            width: 18px;
+            height: 18px;
+            transition: transform $transition-normal;
+            flex-shrink: 0;
+          }
+          
+          .delete-text {
+            font-size: 14px;
+            transition: opacity $transition-normal;
+            
+            @media (max-width: 480px) {
+              display: none;
+            }
+          }
+          
+          &:hover svg {
+            transform: scale(1.1) rotate(-8deg);
+          }
+          
+          // Em telas muito pequenas, só mostra o ícone
+          @media (max-width: 480px) {
+            padding: 12px;
+            min-width: 48px;
+          }
+        }
+      }
+    }
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: $spacing-xl 0;
+    
+    svg {
+      width: 48px;
+      height: 48px;
+      color: $text-light;
+      margin: 0 auto $spacing-md auto;
+    }
+    
+    h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-dark;
+      margin: 0 0 $spacing-xs 0;
+    }
+    
+    p {
+      font-size: 14px;
+      color: $text-light;
+      margin: 0 0 $spacing-lg 0;
+    }
+    
+    .create-btn {
+      @include btn-primary;
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .pagination-info {
+      font-size: 14px;
+      color: $text-dark;
+    }
+    
+    .pagination-controls {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .page-btn {
+        @include btn-secondary;
+        
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Estilos específicos para formulários
+  .form-header {
+    margin-bottom: $spacing-lg;
+    
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      color: $text-dark;
+      margin: 0 0 $spacing-xs 0;
+    }
+    
+    p {
+      color: $text-light;
+      margin: 0;
+    }
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    
+    .filter-group {
+      @include form-group;
+      
+      label {
+        @include form-label;
+      }
+      
+      input, select, textarea {
+        @include input-field;
+      }
+      
+      .error-message {
+        color: $danger-color;
+        font-size: 12px;
+        margin-top: $spacing-xs;
+      }
+    }
+  }
+}
+
+// Dark mode para cards modernos
+.dark {
+  .projetos-page {
+    .page-header {
+      .header-content {
+        h1 {
+          color: $text-dark-primary;
+        }
+        
+        p {
+          color: $text-dark-light;
+        }
+      }
+    }
+    
+    .project-card {
+      background: linear-gradient(135deg, $bg-dark-secondary 0%, #0f172a 100%);
+      border-color: rgba(71, 85, 105, 0.4);
+      
+      &::before {
+        background: linear-gradient(90deg, $primary-color, #06b6d4, #10b981);
+      }
+      
+      &::after {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.03));
+      }
+      
+      &:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        box-shadow: 
+          0 20px 40px rgba(0, 0, 0, 0.3),
+          0 10px 20px rgba(0, 0, 0, 0.15),
+          0 0 0 1px rgba(59, 130, 246, 0.2);
+        
+        .project-info h3 {
+          color: #60a5fa;
+        }
+      }
+      
+      .project-info {
+        h3 {
+          color: $text-dark-primary;
+        }
+        
+        .description {
+          color: #94a3b8;
+        }
+      }
+      
+      .project-details {
+        .price {
+          background: linear-gradient(135deg, #34d399, #10b981);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        
+        .tags {
+          .tag {
+            &.categoria {
+              background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.15));
+              color: #93c5fd;
+              border-color: rgba(59, 130, 246, 0.3);
+            }
+            
+            &.tipo {
+              background: linear-gradient(135deg, rgba(148, 163, 184, 0.15), rgba(100, 116, 139, 0.1));
+              color: #cbd5e1;
+              border-color: rgba(148, 163, 184, 0.3);
+            }
+          }
+        }
+      }
+      
+      .project-actions {
+        .action-btn {
+          &.view-btn {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.12));
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-xs;
+            font-weight: 600;
+            
+            &:hover {
+              background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(99, 102, 241, 0.2));
+              box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+              transform: translateY(-2px);
+            }
+            
+            svg {
+              width: 18px;
+              height: 18px;
+              transition: transform $transition-normal;
+              flex-shrink: 0;
+            }
+            
+            .view-text {
+              font-size: 14px;
+              transition: opacity $transition-normal;
+              
+              @media (max-width: 480px) {
+                display: none;
+              }
+            }
+            
+            &:hover svg {
+              transform: scale(1.1);
+            }
+            
+            // Em telas muito pequenas, só mostra o ícone
+            @media (max-width: 480px) {
+              padding: 12px;
+              min-width: 48px;
+            }
+          }
+          
+          &.edit-btn {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(251, 191, 36, 0.12));
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-xs;
+            font-weight: 600;
+            
+            &:hover {
+              background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(251, 191, 36, 0.2));
+              box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+              transform: translateY(-2px);
+            }
+            
+            svg {
+              width: 18px;
+              height: 18px;
+              transition: transform $transition-normal;
+              flex-shrink: 0;
+            }
+            
+            .edit-text {
+              font-size: 14px;
+              transition: opacity $transition-normal;
+              
+              @media (max-width: 480px) {
+                display: none;
+              }
+            }
+            
+            &:hover svg {
+              transform: scale(1.1) rotate(5deg);
+            }
+            
+            // Em telas muito pequenas, só mostra o ícone
+            @media (max-width: 480px) {
+              padding: 12px;
+              min-width: 48px;
+            }
+          }
+          
+          &.delete-btn {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(248, 113, 113, 0.12));
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.4);
+            padding: 12px 16px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-xs;
+            font-weight: 600;
+            
+            &:hover {
+              background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(248, 113, 113, 0.2));
+              box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+              transform: translateY(-2px);
+            }
+            
+            svg {
+              width: 18px;
+              height: 18px;
+              transition: transform $transition-normal;
+              flex-shrink: 0;
+            }
+            
+            .delete-text {
+              font-size: 14px;
+              transition: opacity $transition-normal;
+              
+              @media (max-width: 480px) {
+                display: none;
+              }
+            }
+            
+            &:hover svg {
+              transform: scale(1.1) rotate(-8deg);
+            }
+            
+            // Em telas muito pequenas, só mostra o ícone
+            @media (max-width: 480px) {
+              padding: 12px;
+              min-width: 48px;
+            }
+          }
+        }
+      }
+    }
+    
+    .empty-state {
+      svg {
+        color: $text-dark-light;
+      }
+      
+      h3 {
+        color: $text-dark-primary;
+      }
+      
+      p {
+        color: $text-dark-light;
+      }
+    }
+    
+    .pagination {
+      .pagination-info {
+        color: $text-dark-primary;
+      }
+    }
+    
+    .form-header {
+      h1 {
+        color: $text-dark-primary;
+      }
+      
+      p {
+        color: $text-dark-light;
+      }
+    }
+  }
+} 

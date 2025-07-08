@@ -1,0 +1,64 @@
+@use '../base/variables' as *;
+
+// Card básico
+.card {
+  background-color: $bg-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $spacing-lg;
+  border: 1px solid $border-color;
+  transition: box-shadow $transition-normal;
+  
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// Card com header
+.card-header {
+  padding-bottom: $spacing-md;
+  margin-bottom: $spacing-md;
+  border-bottom: 1px solid $border-color;
+  
+  h2, h3 {
+    margin: 0;
+    color: $text-dark;
+  }
+}
+
+// Card body
+.card-body {
+  padding: 0;
+}
+
+// Card footer
+.card-footer {
+  padding-top: $spacing-md;
+  margin-top: $spacing-md;
+  border-top: 1px solid $border-color;
+  
+  .btn {
+    margin-right: $spacing-sm;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Card pequeno
+.card-small {
+  padding: $spacing-md;
+}
+
+// Card com destaque
+.card-featured {
+  border-color: $primary-color;
+  box-shadow: $shadow-lg;
+  
+  .card-header {
+    background-color: rgba(59, 130, 246, 0.05);
+    margin: (-$spacing-lg) (-$spacing-lg) $spacing-md (-$spacing-lg);
+    padding: $spacing-md $spacing-lg;
+  }
+} 

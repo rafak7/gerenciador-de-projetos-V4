@@ -12,13 +12,12 @@ export default defineNuxtConfig({
   ssr: true,
   
   // CSS Framework
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/scss/main.scss'],
   
   // Modules
   modules: [
     '@pinia/nuxt',
-    '@vueuse/nuxt',
-    '@nuxtjs/tailwindcss'
+    '@vueuse/nuxt'
   ],
   
   // Dev server config

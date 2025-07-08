@@ -1,0 +1,249 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Sidebar desktop
+.main-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 256px;
+  z-index: 30;
+  transition: width $transition-normal;
+  
+  @media (max-width: $tablet) {
+    display: none;
+  }
+  
+  &.collapsed {
+    width: 64px;
+    
+    .sidebar-header {
+      .collapse-btn {
+        .collapse-icon.rotated {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    
+    .nav-item {
+      justify-content: center;
+      padding: 12px;
+      
+      .nav-icon {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  .sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: $bg-white;
+    border-right: 1px solid $border-color;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: $spacing-md;
+    border-bottom: 1px solid $border-color;
+    
+    .collapse-btn {
+      @include btn-icon;
+      color: $text-light;
+      width: 32px;
+      height: 32px;
+      
+      &:hover {
+        background-color: $bg-gray;
+        color: $text-dark;
+      }
+      
+      .collapse-icon {
+        width: 16px;
+        height: 16px;
+        transition: transform $transition-normal;
+      }
+    }
+  }
+  
+  .sidebar-nav {
+    flex: 1;
+    padding: $spacing-lg $spacing-md $spacing-md $spacing-md;
+    overflow-y: auto;
+  }
+}
+
+// Sidebar mobile
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  
+  @media (min-width: $tablet) {
+    display: none;
+  }
+  
+  .mobile-sidebar-content {
+    width: 256px;
+    height: 100vh;
+    background-color: $bg-white;
+    box-shadow: $shadow-lg;
+  }
+  
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border-color;
+    
+    .logo-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: $text-dark;
+      margin: 0;
+    }
+    
+    .close-btn {
+      @include btn-icon;
+      color: $text-light;
+      
+      &:hover {
+        color: $text-dark;
+      }
+      
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  
+  .mobile-nav {
+    padding: $spacing-lg $spacing-md;
+    overflow-y: auto;
+    flex: 1;
+  }
+}
+
+// Itens de navegação
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: $spacing-xs;
+  border-radius: $border-radius;
+  color: $text-light;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all $transition-normal;
+  border-left: 3px solid transparent;
+  
+  &:hover {
+    background-color: $bg-gray;
+    color: $text-dark;
+  }
+  
+  &.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-left-color: $primary-color;
+    color: $primary-color;
+    
+    .nav-icon {
+      color: $primary-color;
+    }
+  }
+  
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: $spacing-sm;
+    color: $text-light;
+    transition: color $transition-normal;
+  }
+  
+  .nav-text {
+    flex: 1;
+  }
+}
+
+// Overlay para mobile
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+// Dark mode
+.dark {
+  .main-sidebar {
+    .sidebar-container {
+      background-color: $bg-dark-secondary;
+      border-right-color: $border-dark;
+    }
+    
+    .sidebar-header {
+      border-bottom-color: $border-dark;
+      
+      .collapse-btn {
+        color: $text-dark-light;
+        
+        &:hover {
+          background-color: $bg-dark;
+          color: $text-dark-primary;
+        }
+      }
+    }
+  }
+  
+  .mobile-sidebar {
+    .mobile-sidebar-content {
+      background-color: $bg-dark-secondary;
+    }
+    
+    .mobile-header {
+      border-bottom-color: $border-dark;
+      
+      .logo-title {
+        color: $text-dark-primary;
+      }
+      
+      .close-btn {
+        color: $text-dark-light;
+        
+        &:hover {
+          color: $text-dark-primary;
+        }
+      }
+    }
+  }
+  
+  .nav-item {
+    color: $text-dark-light;
+    
+    &:hover {
+      background-color: $bg-dark;
+      color: $text-dark-primary;
+    }
+    
+    &.active {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: $primary-color;
+    }
+    
+    .nav-icon {
+      color: $text-dark-light;
+    }
+  }
+} 

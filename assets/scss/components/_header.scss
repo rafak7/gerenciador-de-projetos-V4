@@ -1,0 +1,174 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Header principal
+.main-header {
+  background-color: $bg-white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: $shadow-sm;
+  position: relative;
+  z-index: 40;
+  
+  .header-content {
+    padding: $spacing-md $spacing-lg;
+  }
+  
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// Seção esquerda
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  
+  .menu-toggle {
+    @include btn-icon;
+    color: $text-light;
+    
+    &:hover {
+      color: $text-dark;
+    }
+    
+    @media (min-width: $tablet) {
+      display: none;
+    }
+  }
+  
+  .page-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $text-dark;
+    margin: 0;
+  }
+}
+
+// Seção direita
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+// Botão de modo escuro
+.dark-mode-toggle {
+  @include btn-icon;
+  color: $text-light;
+  
+  &:hover {
+    color: $text-dark;
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Menu do usuário
+.user-menu {
+  position: relative;
+  
+  .user-trigger {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    color: $text-dark;
+    cursor: pointer;
+    transition: background-color $transition-normal;
+    
+    &:hover {
+      background-color: $bg-gray;
+    }
+    
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      background-color: $primary-color;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-white;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .user-name {
+      font-size: 14px;
+      font-weight: 500;
+      
+      @media (max-width: $mobile) {
+        display: none;
+      }
+    }
+    
+    .dropdown-arrow {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Dropdown do usuário
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: $spacing-sm;
+  width: 200px;
+  background-color: $bg-white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-lg;
+  border: 1px solid $border-color;
+  z-index: 50;
+  
+  .dropdown-item {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    background: none;
+    text-align: left;
+    color: $text-dark;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    transition: background-color $transition-normal;
+    
+    &:hover {
+      background-color: $bg-gray;
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Animações do dropdown
+.dropdown-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.dropdown-leave-active {
+  transition: all 0.075s ease-in;
+}
+
+.dropdown-enter-from {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.dropdown-leave-to {
+  transform: scale(0.95);
+  opacity: 0;
+} 

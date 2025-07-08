@@ -1,0 +1,85 @@
+@use '../base/variables' as *;
+
+// Botão base
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: $border-radius;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-normal;
+  border: 1px solid transparent;
+  text-decoration: none;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Botão primário
+.btn-primary {
+  background-color: $primary-color;
+  color: $text-white;
+  
+  &:hover:not(:disabled) {
+    background-color: $primary-dark;
+    transform: translateY(-1px);
+  }
+}
+
+// Botão secundário
+.btn-secondary {
+  background-color: $secondary-color;
+  color: $text-white;
+  
+  &:hover:not(:disabled) {
+    background-color: #4b5563;
+  }
+}
+
+// Botão de perigo
+.btn-danger {
+  background-color: $danger-color;
+  color: $text-white;
+  
+  &:hover:not(:disabled) {
+    background-color: #dc2626;
+  }
+}
+
+// Botão outline
+.btn-outline {
+  background-color: transparent;
+  border-color: $primary-color;
+  color: $primary-color;
+  
+  &:hover:not(:disabled) {
+    background-color: $primary-color;
+    color: $text-white;
+  }
+}
+
+// Tamanhos
+.btn-small {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.btn-large {
+  padding: 14px 20px;
+  font-size: 16px;
+}
+
+// Botão apenas icone
+.btn-icon {
+  padding: 8px;
+  border-radius: 50%;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+} 

@@ -1,0 +1,83 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+// Campo de input básico
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 14px;
+  transition: border-color $transition-normal;
+  background-color: $bg-white;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+  
+  &.error {
+    border-color: $danger-color;
+  }
+  
+  &:disabled {
+    background-color: $bg-gray;
+    cursor: not-allowed;
+  }
+}
+
+// Label
+.form-label {
+  display: block;
+  margin-bottom: $spacing-sm;
+  font-weight: 500;
+  color: $text-dark;
+  font-size: 14px;
+}
+
+// Grupo de campo
+.form-group {
+  margin-bottom: $spacing-md;
+}
+
+// Mensagem de erro
+.error-message {
+  color: $danger-color;
+  font-size: 12px;
+  margin-top: $spacing-xs;
+}
+
+// Select
+.select-field {
+  @include input-field;
+  cursor: pointer;
+  
+  &:focus {
+    cursor: text;
+  }
+}
+
+// Textarea
+.textarea-field {
+  @include input-field;
+  min-height: 100px;
+  resize: vertical;
+}
+
+// Checkbox e Radio
+.checkbox, .radio {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+  cursor: pointer;
+  
+  input {
+    margin-right: $spacing-sm;
+  }
+  
+  label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+} 
