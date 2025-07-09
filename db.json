@@ -71,6 +71,14 @@
       "categoria": "IoT",
       "tipo": "DevOps",
       "id": "11"
+    },
+    {
+      "id": "12",
+      "nome": "Sistema da Apple",
+      "descricao": "Sistema da apple teste",
+      "preco": 5000,
+      "categoria": "Educação",
+      "tipo": "API Development"
     }
   ],
   "usuarios": [

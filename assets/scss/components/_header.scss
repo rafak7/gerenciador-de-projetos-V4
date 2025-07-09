@@ -172,3 +172,60 @@
   transform: scale(0.95);
   opacity: 0;
 } 
+
+// Dark mode
+.dark {
+  .main-header {
+    background-color: $bg-dark-secondary;
+    border-bottom-color: $border-dark;
+  }
+  
+  .header-left {
+    .menu-toggle {
+      color: $text-dark-light;
+      
+      &:hover {
+        color: $text-dark-primary;
+      }
+    }
+    
+    .page-title {
+      color: $text-dark-primary;
+    }
+  }
+  
+  .dark-mode-toggle {
+    color: $text-dark-light;
+    
+    &:hover {
+      color: $text-dark-primary;
+    }
+  }
+  
+  .user-menu {
+    .user-trigger {
+      color: $text-dark-primary;
+      
+      &:hover {
+        background-color: $bg-dark;
+      }
+      
+      .user-name {
+        color: $text-dark-primary;
+      }
+    }
+  }
+  
+  .user-dropdown {
+    background-color: $bg-dark-secondary;
+    border-color: $border-dark;
+    
+    .dropdown-item {
+      color: $text-dark-primary;
+      
+      &:hover {
+        background-color: $bg-dark;
+      }
+    }
+  }
+} 

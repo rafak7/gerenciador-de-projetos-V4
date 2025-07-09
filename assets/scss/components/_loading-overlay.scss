@@ -36,3 +36,18 @@
     }
   }
 } 
+
+// Dark mode
+.dark {
+  .loading-overlay {
+    .loading-box {
+      background-color: $bg-dark-secondary;
+      
+      .loading-content {
+        .loading-text {
+          color: $text-dark-primary;
+        }
+      }
+    }
+  }
+} 

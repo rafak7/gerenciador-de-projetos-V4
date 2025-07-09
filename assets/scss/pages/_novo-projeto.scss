@@ -598,153 +598,155 @@
 }
 
 // Dark Mode
-:global(.dark) .create-project-page {
-  background: linear-gradient(135deg, $bg-dark 0%, $bg-dark-secondary 100%);
+.dark {
+  .create-project-page {
+    background: linear-gradient(135deg, $bg-dark 0%, $bg-dark-secondary 100%);
 
-  .breadcrumb {
-    background: $bg-dark;
-    border-color: $border-dark;
+    .breadcrumb {
+      background: $bg-dark;
+      border-color: $border-dark;
 
-    .breadcrumb-item {
-      color: $text-dark-light;
-    }
-
-    .breadcrumb-current {
-      color: $text-dark-primary;
-    }
-  }
-
-  .page-hero {
-    .hero-content {
-      .hero-text {
-        h1 {
-          color: $text-dark-primary;
-        }
-
-        p {
-          color: $text-dark-light;
-        }
+      .breadcrumb-item {
+        color: $text-dark-light;
       }
 
-      .progress-indicator {
-        .progress-step {
-          .step-number {
-            background: $bg-dark;
-            border-color: $border-dark;
-            color: $text-dark-light;
+      .breadcrumb-current {
+        color: $text-dark-primary;
+      }
+    }
+
+    .page-hero {
+      .hero-content {
+        .hero-text {
+          h1 {
+            color: $text-dark-primary;
           }
 
-          span {
+          p {
             color: $text-dark-light;
           }
+        }
 
-          &.active {
+        .progress-indicator {
+          .progress-step {
             .step-number {
-              background: $primary-color;
-              border-color: $primary-color;
-              color: white;
+              background: $bg-dark;
+              border-color: $border-dark;
+              color: $text-dark-light;
             }
 
             span {
-              color: $text-dark-primary;
+              color: $text-dark-light;
+            }
+
+            &.active {
+              .step-number {
+                background: $primary-color;
+                border-color: $primary-color;
+                color: white;
+              }
+
+              span {
+                color: $text-dark-primary;
+              }
+            }
+          }
+
+          .progress-line {
+            background: $border-dark;
+
+            &.active {
+              background: $primary-color;
             }
           }
         }
+      }
+    }
 
-        .progress-line {
-          background: $border-dark;
+    .form-card {
+      background: $bg-dark;
+      border-color: $border-dark;
 
-          &.active {
-            background: $primary-color;
+      &:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-header {
+        border-color: $border-dark;
+
+        .card-title {
+          h2 {
+            color: $text-dark-primary;
+          }
+
+          p {
+            color: $text-dark-light;
           }
         }
       }
     }
-  }
 
-  .form-card {
-    background: $bg-dark;
-    border-color: $border-dark;
-
-    &:hover {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    }
-
-    .card-header {
+    .form-actions {
+      background: $bg-dark;
       border-color: $border-dark;
 
-      .card-title {
-        h2 {
+      .form-summary {
+        h3 {
           color: $text-dark-primary;
         }
 
-        p {
-          color: $text-dark-light;
+        .summary-item {
+          border-color: $border-dark;
+
+          .summary-label {
+            color: $text-dark-light;
+          }
+
+          .summary-value {
+            color: $text-dark-primary;
+          }
         }
       }
     }
-  }
 
-  .form-actions {
-    background: $bg-dark;
-    border-color: $border-dark;
-
-    .form-summary {
-      h3 {
+    .form-group {
+      .form-label {
         color: $text-dark-primary;
       }
 
-      .summary-item {
-        border-color: $border-dark;
-
-        .summary-label {
-          color: $text-dark-light;
-        }
-
-        .summary-value {
+      .input-wrapper {
+        input, textarea {
+          background: $bg-dark-secondary;
+          border-color: $border-dark;
           color: $text-dark-primary;
+
+          &::placeholder {
+            color: $text-dark-light;
+          }
         }
       }
     }
-  }
 
-  .form-group {
-    .form-label {
-      color: $text-dark-primary;
-    }
-
-    .input-wrapper {
-      input, textarea {
-        background: $bg-dark-secondary;
-        border-color: $border-dark;
-        color: $text-dark-primary;
-
-        &::placeholder {
-          color: $text-dark-light;
-        }
-      }
-    }
-  }
-
-  .select-wrapper select {
-    background: $bg-dark-secondary;
-    border-color: $border-dark;
-    color: $text-dark-primary;
-  }
-
-  .price-suggestion {
-    background: $bg-dark-secondary;
-    border-color: $border-dark;
-    color: $text-dark-light;
-  }
-
-  .btn-secondary {
-    color: $text-dark-light;
-    border-color: $border-dark;
-
-    &:hover {
+    .select-wrapper select {
       background: $bg-dark-secondary;
+      border-color: $border-dark;
       color: $text-dark-primary;
+    }
+
+    .price-suggestion {
+      background: $bg-dark-secondary;
+      border-color: $border-dark;
+      color: $text-dark-light;
+    }
+
+    .btn-secondary {
+      color: $text-dark-light;
+      border-color: $border-dark;
+
+      &:hover {
+        background: $bg-dark-secondary;
+        color: $text-dark-primary;
+      }
     }
   }
 }

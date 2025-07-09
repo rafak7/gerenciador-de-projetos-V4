@@ -62,3 +62,35 @@
     padding: $spacing-md $spacing-lg;
   }
 } 
+
+// Dark mode
+.dark {
+  .card {
+    background-color: $bg-dark-secondary;
+    border-color: $border-dark;
+    
+    &:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .card-header {
+    border-bottom-color: $border-dark;
+    
+    h2, h3 {
+      color: $text-dark-primary;
+    }
+  }
+  
+  .card-footer {
+    border-top-color: $border-dark;
+  }
+  
+  .card-featured {
+    border-color: #60a5fa;
+    
+    .card-header {
+      background-color: rgba(96, 165, 250, 0.1);
+    }
+  }
+} 
