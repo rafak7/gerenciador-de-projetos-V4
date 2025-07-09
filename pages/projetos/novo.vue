@@ -1,6 +1,6 @@
 <template>
   <div class="create-project-page">
-    <!-- Breadcrumb -->
+    
     <nav class="breadcrumb">
       <NuxtLink to="/projetos" class="breadcrumb-item">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -12,7 +12,7 @@
       <span class="breadcrumb-current">Novo Projeto</span>
     </nav>
 
-    <!-- Hero Header -->
+    
     <div class="page-hero">
       <div class="hero-background">
         <div class="hero-pattern"></div>
@@ -46,10 +46,10 @@
       </div>
     </div>
 
-    <!-- Main Form -->
+    
     <div class="form-container">
       <form @submit.prevent="handleSubmit" class="project-form">
-        <!-- Basic Information Card -->
+        
         <div class="form-card info-card">
           <div class="card-header">
             <div class="card-icon">
@@ -108,7 +108,7 @@
           </div>
         </div>
 
-        <!-- Financial Information Card -->
+        
         <div class="form-card financial-card">
           <div class="card-header">
             <div class="card-icon">
@@ -160,7 +160,7 @@
           </div>
         </div>
 
-        <!-- Classification Card -->
+        
         <div class="form-card classification-card">
           <div class="card-header">
             <div class="card-icon">
@@ -233,7 +233,7 @@
           </div>
         </div>
 
-        <!-- Action Buttons -->
+        
         <div class="form-actions">
           <div class="actions-content">
             <div class="form-summary">
@@ -288,19 +288,16 @@
 <script setup lang="ts">
 import type { NovoProjetoInput } from '~/types'
 
-// Middleware
 definePageMeta({
   middleware: 'auth'
 })
 
-// Stores
 const projetosStore = useProjetosStore()
 const uiStore = useUIStore()
 const { loading } = storeToRefs(projetosStore)
 const { createProjeto } = projetosStore
 const { showSuccess, showError } = uiStore
 
-// State
 const form = reactive<NovoProjetoInput>({
   nome: '',
   descricao: '',
@@ -337,7 +334,6 @@ const priceSuggestions = ref([
   { label: 'R$ 100.000', value: 100000 }
 ])
 
-// Computed
 const isFormValid = computed(() => {
   return form.nome.trim().length >= 3 &&
          form.descricao.trim().length >= 10 &&
@@ -345,8 +341,6 @@ const isFormValid = computed(() => {
          form.categoria &&
          form.tipo
 })
-
-// Methods
 const updateProgress = () => {
   let step = 1
   if (form.nome && form.descricao) {
@@ -366,7 +360,6 @@ const formatCurrency = (value: number) => {
 }
 
 const validateForm = () => {
-  // Reset errors
   Object.keys(errors).forEach(key => {
     errors[key as keyof typeof errors] = ''
   })
@@ -426,7 +419,6 @@ const handleSubmit = async () => {
   }
 }
 
-// SEO
 useHead({
   title: 'Novo Projeto - Gerenciador de Projetos'
 })

@@ -2,22 +2,17 @@ import { defineStore } from 'pinia'
 import type { Usuario, LoginInput, LoginResponse } from '~/types'
 
 export const useAuthStore = defineStore('auth', () => {
-  // State
   const usuario = ref<Usuario | null>(null)
   const isAuthenticated = ref(false)
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  // Runtime config
   const config = useRuntimeConfig()
-
-  // Actions
   const login = async (credentials: LoginInput): Promise<boolean> => {
     isLoading.value = true
     error.value = null
 
     try {
-      // Simular requisição para a API fake
       const response = await $fetch<Usuario[]>(`${config.public.apiBase}/usuarios`, {
         query: {
           email: credentials.email,
@@ -31,7 +26,6 @@ export const useAuthStore = defineStore('auth', () => {
 
       const foundUser = response[0]
       
-      // Simular resposta de login
       const loginResponse: LoginResponse = {
         usuario: {
           id: foundUser.id,
@@ -42,11 +36,9 @@ export const useAuthStore = defineStore('auth', () => {
         token: foundUser.token
       }
 
-      // Salvar dados do usuário
       usuario.value = loginResponse.usuario
       isAuthenticated.value = true
 
-      // Salvar token no localStorage
       if (process.client) {
         localStorage.setItem('auth-token', loginResponse.token)
         localStorage.setItem('user-data', JSON.stringify(loginResponse.usuario))
@@ -71,7 +63,6 @@ export const useAuthStore = defineStore('auth', () => {
       localStorage.removeItem('user-data')
     }
 
-    // Redirecionar para login
     navigateTo('/login')
   }
 
@@ -98,7 +89,6 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
   }
 
-  // Getters
   const getToken = computed(() => {
     if (process.client) {
       return localStorage.getItem('auth-token')
@@ -108,25 +98,21 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getUserName = computed(() => usuario.value?.nome || '')
 
-  // Initialize auth state on store creation
   if (process.client) {
     checkAuth()
   }
 
   return {
-    // State
     usuario: readonly(usuario),
     isAuthenticated: readonly(isAuthenticated),
     isLoading: readonly(isLoading),
     error: readonly(error),
     
-    // Actions
     login,
     logout,
     checkAuth,
     clearError,
     
-    // Getters
     getToken,
     getUserName
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="login-page" :class="{ dark: uiStore.darkMode }">
-    <!-- Botão de alternância de tema -->
+    
     <div class="theme-toggle">
       <button @click="uiStore.toggleDarkMode()" class="theme-toggle-btn">
         <svg v-if="!uiStore.darkMode" class="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -14,7 +14,7 @@
 
     <div class="login-container">
       <div class="login-card">
-        <!-- Header -->
+        
         <div class="login-header">
           <h1 class="login-title">
             Gerenciador de Projetos
@@ -24,10 +24,10 @@
           </p>
         </div>
 
-        <!-- Conteúdo da página -->
+        
         <NuxtPage />
 
-        <!-- Footer -->
+        
         <div class="login-footer">
           <p class="copyright">
             © {{ currentYear }} Gerenciador de Projetos. Todos os direitos reservados.
@@ -36,23 +36,20 @@
       </div>
     </div>
 
-    <!-- Notifications -->
+    
     <NotificationContainer />
 
-    <!-- Loading Overlay -->
+    
     <LoadingOverlay v-if="isLoading" />
   </div>
 </template>
 
 <script setup lang="ts">
-// Stores
 const uiStore = useUIStore()
 const { isLoading } = storeToRefs(uiStore)
 
-// Current year for footer
 const currentYear = new Date().getFullYear()
 
-// SEO
 useHead({
   htmlAttrs: {
     lang: 'pt-BR'

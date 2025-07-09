@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Página de projetos
 .projetos-page {
   .page-header {
     display: flex;
@@ -113,7 +112,6 @@
     transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     cursor: pointer;
     
-    // Gradiente sutil no topo
     &::before {
       content: '';
       position: absolute;
@@ -125,7 +123,6 @@
       border-radius: 16px 16px 0 0;
     }
     
-    // Glow effect sutil
     &::after {
       content: '';
       position: absolute;
@@ -178,7 +175,6 @@
         line-height: 1.3;
         transition: color $transition-normal;
         
-        // Limite de linhas para títulos longos
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -268,7 +264,6 @@
         position: relative;
         overflow: hidden;
         
-        // Efeito de brilho
         &::before {
           content: '';
           position: absolute;
@@ -320,7 +315,6 @@
             transform: scale(1.1);
           }
           
-          // Em telas muito pequenas, só mostra o ícone
           @media (max-width: 480px) {
             padding: 12px;
             min-width: 48px;
@@ -363,7 +357,6 @@
             transform: scale(1.1) rotate(5deg);
           }
           
-          // Em telas muito pequenas, só mostra o ícone
           @media (max-width: 480px) {
             padding: 12px;
             min-width: 48px;
@@ -408,7 +401,6 @@
             transform: scale(1.1) rotate(-8deg);
           }
           
-          // Em telas muito pequenas, só mostra o ícone
           @media (max-width: 480px) {
             padding: 12px;
             min-width: 48px;
@@ -472,7 +464,6 @@
     }
   }
 
-  // Estilos específicos para formulários
   .form-header {
     margin-bottom: $spacing-lg;
     
@@ -514,7 +505,6 @@
   }
 }
 
-// Dark mode para cards modernos
 .dark {
   .projetos-page {
     .page-header {
@@ -670,7 +660,6 @@
               transform: scale(1.1);
             }
             
-            // Em telas muito pequenas, só mostra o ícone
             @media (max-width: 480px) {
               padding: 12px;
               min-width: 48px;
@@ -713,7 +702,6 @@
               transform: scale(1.1) rotate(5deg);
             }
             
-            // Em telas muito pequenas, só mostra o ícone
             @media (max-width: 480px) {
               padding: 12px;
               min-width: 48px;
@@ -758,7 +746,6 @@
               transform: scale(1.1) rotate(-8deg);
             }
             
-            // Em telas muito pequenas, só mostra o ícone
             @media (max-width: 480px) {
               padding: 12px;
               min-width: 48px;

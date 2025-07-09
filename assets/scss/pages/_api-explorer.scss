@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Página API Explorer
 .api-explorer {
   max-width: 1280px;
   margin: 0 auto;
@@ -332,7 +331,6 @@
   }
 } 
 
-// Dark mode
 .dark {
   .api-explorer {
     .page-header {

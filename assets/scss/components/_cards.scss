@@ -1,6 +1,5 @@
 @use '../base/variables' as *;
 
-// Card básico
 .card {
   background-color: $bg-white;
   border-radius: $border-radius-lg;
@@ -14,7 +13,6 @@
   }
 }
 
-// Card com header
 .card-header {
   padding-bottom: $spacing-md;
   margin-bottom: $spacing-md;
@@ -26,12 +24,10 @@
   }
 }
 
-// Card body
 .card-body {
   padding: 0;
 }
 
-// Card footer
 .card-footer {
   padding-top: $spacing-md;
   margin-top: $spacing-md;
@@ -46,12 +42,10 @@
   }
 }
 
-// Card pequeno
 .card-small {
   padding: $spacing-md;
 }
 
-// Card com destaque
 .card-featured {
   border-color: $primary-color;
   box-shadow: $shadow-lg;
@@ -63,7 +57,6 @@
   }
 } 
 
-// Dark mode
 .dark {
   .card {
     background-color: $bg-dark-secondary;

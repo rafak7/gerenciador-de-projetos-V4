@@ -1,12 +1,12 @@
 <template>
   <div class="api-explorer">
-    <!-- Header -->
+    
     <div class="page-header">
       <h1>Servidor API - Explorer</h1>
       <p>Visualize e teste os endpoints GET disponíveis no servidor JSON (localhost:3001)</p>
     </div>
 
-    <!-- Status da API -->
+    
     <div class="api-status">
       <div class="status-indicator">
         <div :class="[
@@ -25,9 +25,9 @@
 
     
 
-    <!-- Endpoints -->
+    
     <div class="endpoints-grid">
-      <!-- Projetos -->
+      
       <div class="endpoint-card">
         <div class="endpoint-header">
           <div class="header-row">
@@ -45,7 +45,7 @@
           <p class="endpoint-description">Lista todos os projetos disponíveis</p>
         </div>
         <div v-if="data.projetos" class="endpoint-content">
-          <!-- Lista completa com destaque -->
+          
           <div class="response-container">
             <div v-if="Array.isArray(data.projetos)">
               <div class="response-meta">
@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <!-- Usuários -->
+      
       <div class="endpoint-card">
         <div class="endpoint-header">
           <div class="header-row">
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <!-- Categorias -->
+      
       <div class="endpoint-card">
         <div class="endpoint-header">
           <div class="header-row">
@@ -135,7 +135,7 @@
         </div>
       </div>
 
-      <!-- Tipos -->
+      
       <div class="endpoint-card">
         <div class="endpoint-header">
           <div class="header-row">
@@ -160,7 +160,7 @@
       </div>
     </div>
 
-    <!-- Seção de Teste Individual -->
+    
     <div class="custom-test">
       <div class="test-header">
         <h2>Teste Endpoint Personalizado</h2>
@@ -208,15 +208,11 @@
 <script setup lang="ts">
 import { CommandLineIcon } from '@heroicons/vue/24/outline'
 
-// Meta da página
 definePageMeta({
   layout: 'default'
 })
 
-// Store
 const projetosStore = useProjetosStore()
-
-// Estados reativos
 const apiStatus = ref<'online' | 'offline'>('offline')
 const customEndpoint = ref('/projetos')
 
@@ -240,10 +236,7 @@ const error = reactive({
   custom: null as string | null
 })
 
-// Configuração da API
 const API_BASE_URL = 'http://localhost:3001'
-
-// Função para verificar status da API
 const checkApiStatus = async () => {
   try {
     await $fetch(`${API_BASE_URL}/projetos?_limit=1`)
@@ -253,7 +246,6 @@ const checkApiStatus = async () => {
   }
 }
 
-// Funções para buscar dados
 const fetchProjects = async () => {
   loading.projetos = true
   try {
@@ -318,7 +310,6 @@ const fetchCustomEndpoint = async () => {
   loading.custom = false
 }
 
-// Computed para projeto destacado
 const lastCreatedProject = computed(() => {
   if (!projetosStore.lastCreatedProjetoId || !Array.isArray(data.projetos)) {
     return null
@@ -326,7 +317,6 @@ const lastCreatedProject = computed(() => {
   return data.projetos.find((p: any) => p.id.toString() === projetosStore.lastCreatedProjetoId)
 })
 
-// Computed para reordenar projetos com o destacado primeiro
 const sortedProjects = computed(() => {
   if (!Array.isArray(data.projetos) || !projetosStore.lastCreatedProjetoId) {
     return data.projetos
@@ -343,17 +333,14 @@ const sortedProjects = computed(() => {
   return projects
 })
 
-// Função para verificar se um projeto deve ser destacado
 const isHighlightedProject = (projectId: string | number): boolean => {
   return projetosStore.lastCreatedProjetoId === projectId.toString()
 }
 
-// Função para limpar o destaque
 const clearHighlight = () => {
   projetosStore.clearLastCreatedHighlight()
 }
 
-// Verificar status ao montar o componente
 onMounted(() => {
   checkApiStatus()
 })

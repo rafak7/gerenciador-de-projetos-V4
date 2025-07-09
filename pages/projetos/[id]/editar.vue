@@ -122,23 +122,19 @@
 <script setup lang="ts">
 import type { EditarProjetoInput } from '~/types'
 
-// Middleware
 definePageMeta({
   middleware: 'auth'
 })
 
-// Stores
 const projetosStore = useProjetosStore()
 const uiStore = useUIStore()
 const { currentProjeto, loading, error } = storeToRefs(projetosStore)
 const { fetchProjetoById, updateProjeto } = projetosStore
 const { showSuccess, showError } = uiStore
 
-// Route
 const route = useRoute()
 const projetoId = parseInt(route.params.id as string)
 
-// State
 const form = reactive<EditarProjetoInput>({
   nome: '',
   descricao: '',
@@ -164,12 +160,9 @@ const tipos = ref([
   'Web Development', 'Mobile Development', 'Desktop Development',
   'API Development', 'Data Science', 'DevOps'
 ])
-
-// Methods
 const loadProjeto = async () => {
   await fetchProjetoById(projetoId)
   if (currentProjeto.value) {
-    // Preencher formulário com dados do projeto atual
     form.nome = currentProjeto.value.nome
     form.descricao = currentProjeto.value.descricao
     form.preco = currentProjeto.value.preco
@@ -179,7 +172,6 @@ const loadProjeto = async () => {
 }
 
 const validateForm = () => {
-  // Reset errors
   Object.keys(errors).forEach(key => {
     errors[key as keyof typeof errors] = ''
   })
@@ -233,12 +225,10 @@ const handleSubmit = async () => {
   }
 }
 
-// Load project data on mount
 onMounted(() => {
   loadProjeto()
 })
 
-// SEO
 useHead({
   title: 'Editar Projeto - Gerenciador de Projetos',
   meta: [

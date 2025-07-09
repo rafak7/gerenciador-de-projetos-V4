@@ -1,12 +1,10 @@
 @use '../base/variables' as *;
 
-// Página Criar Novo Projeto
 .create-project-page {
   min-height: 100vh;
   background: linear-gradient(135deg, $bg-white 0%, $bg-gray-light 100%);
   padding: 0;
 
-  // Breadcrumb
   .breadcrumb {
     display: flex;
     align-items: center;
@@ -46,7 +44,6 @@
     }
   }
 
-  // Hero Section
   .page-hero {
     position: relative;
     padding: 3rem 2rem;
@@ -214,7 +211,6 @@
     }
   }
 
-  // Form Container
   .form-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -231,7 +227,6 @@
     }
   }
 
-  // Form Cards
   .form-card {
     background: $bg-white;
     border-radius: $border-radius-lg;
@@ -290,7 +285,6 @@
       padding: 1.5rem;
     }
 
-    // Cards específicos
     &.info-card .card-header .card-icon {
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
     }
@@ -304,7 +298,6 @@
     }
   }
 
-  // Form Groups
   .form-group {
     margin-bottom: 1.5rem;
 
@@ -359,7 +352,6 @@
         line-height: 1.5;
       }
 
-      // Price Input
       &.price-input {
         .currency-prefix {
           position: absolute;
@@ -387,7 +379,6 @@
     }
   }
 
-  // Form Grid
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -399,7 +390,6 @@
     }
   }
 
-  // Select Wrapper
   .select-wrapper {
     position: relative;
 
@@ -439,7 +429,6 @@
     }
   }
 
-  // Price Suggestions
   .price-suggestions {
     display: flex;
     flex-wrap: wrap;
@@ -466,7 +455,6 @@
     }
   }
 
-  // Form Actions
   .form-actions {
     background: $bg-white;
     border-radius: $border-radius-lg;
@@ -536,7 +524,6 @@
     }
   }
 
-  // Buttons
   .btn {
     display: flex;
     align-items: center;
@@ -586,7 +573,6 @@
     }
   }
 
-  // Loading Spinner
   .spinner {
     width: 1rem;
     height: 1rem;
@@ -597,7 +583,6 @@
   }
 }
 
-// Dark Mode
 .dark {
   .create-project-page {
     background: linear-gradient(135deg, $bg-dark 0%, $bg-dark-secondary 100%);
@@ -751,7 +736,6 @@
   }
 }
 
-// Animations
 @keyframes slideUp {
   from {
     opacity: 0;

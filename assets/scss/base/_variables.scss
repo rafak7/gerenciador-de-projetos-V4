@@ -1,4 +1,3 @@
-// Cores principais
 $primary-color: #3b82f6;
 $primary-dark: #2563eb;
 $secondary-color: #6b7280;
@@ -7,16 +6,13 @@ $warning-color: #f59e0b;
 $danger-color: #ef4444;
 $info-color: #0ea5e9;
 
-// Cores de texto
 $text-dark: #1f2937;
 $text-light: #6b7280;
 $text-white: #ffffff;
 
-// Cores de texto para dark mode
 $text-dark-primary: #f9fafb;
 $text-dark-light: #d1d5db;
 
-// Cores de fundo
 $bg-white: #ffffff;
 $bg-gray-light: #f9fafb;
 $bg-gray: #f3f4f6;
@@ -24,7 +20,6 @@ $bg-gray-dark: #374151;
 $bg-dark: #1f2937;
 $bg-dark-secondary: #111827;
 
-// Borders
 $border-color: #e5e7eb;
 $border-light: #f3f4f6;
 $border-dark: #374151;
@@ -35,25 +30,21 @@ $border-radius-lg: 12px;
 $border-radius-xl: 16px;
 $border-radius-full: 9999px;
 
-// Espacamentos
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
 
-// Sombras
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-// Transições
 $transition-fast: 0.15s ease;
 $transition-normal: 0.2s ease;
 $transition-slow: 0.3s ease;
 
-// Breakpoints
 $mobile: 768px;
 $tablet: 1024px;
 $desktop-sm: 1200px;

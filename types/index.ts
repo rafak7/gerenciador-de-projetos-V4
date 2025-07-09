@@ -108,11 +108,9 @@ export interface FormState<T> {
   isDirty: boolean
 }
 
-// Utility types
 export type ProjetoFormData = Omit<Projeto, 'id'>
 export type PartialProjeto = Partial<Projeto> & { id: string | number }
 
-// API endpoints types
 export interface ApiEndpoints {
   projetos: string
   usuarios: string

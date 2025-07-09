@@ -52,12 +52,12 @@
       </div>
     </div>
 
-    <!-- Loading State -->
+    
     <div v-if="loading.list" class="loading-state">
       <div class="spinner"></div>
     </div>
 
-    <!-- Error State -->
+    
     <div v-else-if="error" class="error-state">
       <div class="error-content">
         <h3>Erro ao carregar projetos</h3>
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <!-- Projects Grid -->
+    
     <div v-else-if="projetos.length > 0" class="projects-grid">
       <div
         v-for="projeto in projetos"
@@ -112,7 +112,7 @@
       </div>
     </div>
 
-    <!-- Empty State -->
+    
     <div v-else class="empty-state">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -124,7 +124,7 @@
       </NuxtLink>
     </div>
 
-    <!-- Pagination -->
+    
     <div v-if="projetos.length > 0" class="pagination">
       <div class="pagination-info">
         Mostrando {{ (pagination.currentPage - 1) * pagination.itemsPerPage + 1 }} a 
@@ -154,22 +154,18 @@
 <script setup lang="ts">
 import type { Projeto } from '~/types'
 
-// Stores
 const projetosStore = useProjetosStore()
 const uiStore = useUIStore()
 const { projetos, loading, error, pagination, hasNextPage, hasPrevPage } = storeToRefs(projetosStore)
 const { fetchProjetos, deleteProjeto, setFilters } = projetosStore
 const { showSuccess, showError } = uiStore
 
-// State
 const searchTerm = ref('')
 const selectedCategoria = ref('')
 const selectedTipo = ref('')
 const sortBy = ref('nome')
 const categorias = ref<string[]>([])
 const tipos = ref<string[]>([])
-
-// Methods
 const loadProjetos = () => {
   fetchProjetos({
     search: searchTerm.value || undefined,
@@ -208,11 +204,10 @@ const confirmDelete = (projeto: Projeto) => {
 
 const handleDelete = async (id: number) => {
   const success = await deleteProjeto(id)
-  if (success) {
-    showSuccess('Projeto excluído', 'O projeto foi removido com sucesso')
-    // Recarregar projetos após exclusão para atualizar paginação
-    loadProjetos()
-  } else {
+      if (success) {
+      showSuccess('Projeto excluído', 'O projeto foi removido com sucesso')
+      loadProjetos()
+    } else {
     showError('Erro ao excluir', 'Não foi possível excluir o projeto')
   }
 }
@@ -243,24 +238,16 @@ const prevPage = async () => {
   }
 }
 
-// Watchers
 watchDebounced([searchTerm, selectedCategoria, selectedTipo, sortBy], () => {
-  // Resetar para página 1 quando filtros mudarem
   setFilters({ page: 1 })
   loadProjetos()
 }, { debounce: 300 })
 
-// Lifecycle
 onMounted(async () => {
   await Promise.all([loadProjetos(), loadOptions()])
 })
 
-// SEO
 useHead({
   title: 'Projetos - Gerenciador de Projetos'
 })
-</script>
-
-<style scoped>
-/* Estilos específicos da página já estão no SCSS */
-</style> 
+</script> 

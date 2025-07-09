@@ -19,7 +19,7 @@
   </div>
 
   <div v-else-if="currentProjeto" class="projeto-detalhes">
-    <!-- Breadcrumb -->
+    
     <nav class="breadcrumb">
       <NuxtLink to="/projetos" class="breadcrumb-item">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@
       <span class="breadcrumb-current">{{ currentProjeto.nome }}</span>
     </nav>
 
-    <!-- Hero Header -->
+    
     <div class="projeto-hero">
       <div class="hero-background">
         <div class="hero-gradient"></div>
@@ -89,7 +89,7 @@
       </div>
     </div>
 
-    <!-- Statistics Cards -->
+    
     <div class="stats-grid">
       <div class="stat-card revenue">
         <div class="stat-icon">
@@ -140,11 +140,11 @@
       </div>
     </div>
 
-    <!-- Main Content Layout -->
+    
     <div class="projeto-layout">
-      <!-- Left Column -->
+      
       <div class="projeto-main">
-        <!-- Description Card -->
+        
         <div class="detail-card description-card">
           <div class="card-header">
             <div class="card-title">
@@ -159,7 +159,7 @@
           </div>
         </div>
 
-        <!-- Project Details Card -->
+        
         <div class="detail-card specs-card">
           <div class="card-header">
             <div class="card-title">
@@ -192,9 +192,9 @@
         </div>
       </div>
 
-      <!-- Right Sidebar -->
+      
       <div class="projeto-sidebar">
-        <!-- Quick Actions -->
+        
         <div class="detail-card actions-card">
           <div class="card-header">
             <div class="card-title">
@@ -269,7 +269,7 @@
           </div>
         </div>
 
-        <!-- Project Timeline -->
+        
         <div class="detail-card timeline-card">
           <div class="card-header">
             <div class="card-title">
@@ -311,18 +311,15 @@
 </template>
 
 <script setup lang="ts">
-// Stores
 const projetosStore = useProjetosStore()
 const uiStore = useUIStore()
 const { currentProjeto, loading, error } = storeToRefs(projetosStore)
 const { fetchProjetoById, deleteProjeto, createProjeto, resetCurrentProjeto } = projetosStore
 const { showSuccess, showError } = uiStore
 
-// Route
 const route = useRoute()
 const projetoId = parseInt(route.params.id as string)
 
-// Methods
 const loadProjeto = async () => {
   await fetchProjetoById(projetoId)
 }
@@ -471,7 +468,6 @@ const getDeliveryDate = () => {
   return new Date(creationDate.getFullYear(), creationDate.getMonth() + monthsToAdd, creationDate.getDate())
 }
 
-// Lifecycle
 onMounted(() => {
   if (projetoId) {
     loadProjeto()
@@ -482,7 +478,6 @@ onUnmounted(() => {
   resetCurrentProjeto()
 })
 
-// SEO
 const pageTitle = computed(() => 
   currentProjeto.value ? 
     `${currentProjeto.value.nome} - Gerenciador de Projetos` : 

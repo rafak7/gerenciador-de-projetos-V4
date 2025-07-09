@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type { Notification } from '~/types'
 
 export const useUIStore = defineStore('ui', () => {
-  // State
   const sidebarOpen = ref(false)
   const sidebarCollapsed = ref(false)
   const darkMode = ref(false)
@@ -12,7 +11,6 @@ export const useUIStore = defineStore('ui', () => {
     page: false
   })
 
-  // Actions
   const toggleSidebar = () => {
     sidebarOpen.value = !sidebarOpen.value
   }
@@ -28,7 +26,6 @@ export const useUIStore = defineStore('ui', () => {
   const toggleSidebarCollapse = () => {
     sidebarCollapsed.value = !sidebarCollapsed.value
     
-    // Persistir preferência
     if (process.client) {
       localStorage.setItem('sidebar-collapsed', sidebarCollapsed.value.toString())
     }
@@ -46,11 +43,9 @@ export const useUIStore = defineStore('ui', () => {
   const toggleDarkMode = () => {
     darkMode.value = !darkMode.value
     
-    // Persistir preferência
     if (process.client) {
       localStorage.setItem('dark-mode', darkMode.value.toString())
       
-      // Aplicar classe no documento
       if (darkMode.value) {
         document.documentElement.classList.add('dark')
       } else {
@@ -61,16 +56,13 @@ export const useUIStore = defineStore('ui', () => {
 
   const initializeDarkMode = () => {
     if (process.client) {
-      // Verificar preferência salva
       const savedMode = localStorage.getItem('dark-mode')
       if (savedMode) {
         darkMode.value = savedMode === 'true'
       } else {
-        // Usar preferência do sistema
         darkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
       }
       
-      // Aplicar classe no documento
       if (darkMode.value) {
         document.documentElement.classList.add('dark')
       } else {
@@ -79,7 +71,6 @@ export const useUIStore = defineStore('ui', () => {
     }
   }
 
-  // Map para controlar timeouts das notificações
   const notificationTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
   const addNotification = (notification: Omit<Notification, 'id'>) => {
@@ -90,7 +81,6 @@ export const useUIStore = defineStore('ui', () => {
       ...notification
     }
     
-    // Limitar a 5 notificações simultâneas
     if (notifications.value.length >= 5) {
       const oldestNotification = notifications.value[0]
       removeNotification(oldestNotification.id)
@@ -98,7 +88,6 @@ export const useUIStore = defineStore('ui', () => {
     
     notifications.value.push(newNotification)
     
-    // Auto remover após o tempo especificado
     if (newNotification.duration && newNotification.duration > 0) {
       const timeoutId = setTimeout(() => {
         removeNotification(id)
@@ -115,7 +104,6 @@ export const useUIStore = defineStore('ui', () => {
     if (index !== -1) {
       notifications.value.splice(index, 1)
       
-      // Limpar timeout se existir
       const timeoutId = notificationTimeouts.get(id)
       if (timeoutId) {
         clearTimeout(timeoutId)
@@ -125,7 +113,6 @@ export const useUIStore = defineStore('ui', () => {
   }
 
   const clearAllNotifications = () => {
-    // Limpar todos os timeouts
     notificationTimeouts.forEach((timeoutId) => {
       clearTimeout(timeoutId)
     })
@@ -134,7 +121,6 @@ export const useUIStore = defineStore('ui', () => {
     notifications.value = []
   }
 
-  // Notification helpers
   const showSuccess = (title: string, message: string, duration?: number) => {
     return addNotification({
       type: 'success',
@@ -179,26 +165,22 @@ export const useUIStore = defineStore('ui', () => {
     loading.value.page = isLoading
   }
 
-  // Getters
   const hasNotifications = computed(() => notifications.value.length > 0)
   const notificationCount = computed(() => notifications.value.length)
   const isLoading = computed(() => loading.value.global || loading.value.page)
 
-  // Initialize on client
   if (process.client) {
     initializeDarkMode()
     initializeSidebarState()
   }
 
   return {
-    // State
     sidebarOpen: readonly(sidebarOpen),
     sidebarCollapsed: readonly(sidebarCollapsed),
     darkMode: readonly(darkMode),
     notifications: readonly(notifications),
     loading: readonly(loading),
     
-    // Actions
     toggleSidebar,
     closeSidebar,
     openSidebar,
@@ -210,17 +192,14 @@ export const useUIStore = defineStore('ui', () => {
     removeNotification,
     clearAllNotifications,
     
-    // Notification helpers
     showSuccess,
     showError,
     showWarning,
     showInfo,
     
-    // Loading actions
     setGlobalLoading,
     setPageLoading,
     
-    // Getters
     hasNotifications,
     notificationCount,
     isLoading

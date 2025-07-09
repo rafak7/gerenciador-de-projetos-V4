@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Container principal da página de login
 .login-page {
   min-height: 100vh;
   background: linear-gradient(135deg, 
@@ -20,7 +19,6 @@
   }
 }
 
-// Botão de alternância de tema
 .theme-toggle {
   position: absolute;
   top: $spacing-lg;
@@ -58,7 +56,6 @@
       transition: transform $transition-normal;
     }
     
-    // Dark mode
     .dark & {
       background: rgba(31, 41, 55, 0.9);
       border-color: rgba(75, 85, 99, 0.5);
@@ -71,7 +68,6 @@
   }
 }
 
-// Container do formulário
 .login-container {
   display: flex;
   align-items: center;
@@ -80,7 +76,6 @@
   padding: $spacing-lg;
 }
 
-// Card do formulário de login
 .login-card {
   width: 100%;
   max-width: 420px;
@@ -101,7 +96,6 @@
       0 0 0 1px rgba(255, 255, 255, 0.15);
   }
   
-  // Dark mode
   .dark & {
     background: rgba(31, 41, 55, 0.95);
     border-color: rgba(75, 85, 99, 0.6);
@@ -117,7 +111,6 @@
   }
 }
 
-// Header do login
 .login-header {
   text-align: center;
   margin-bottom: $spacing-xl;
@@ -151,7 +144,6 @@
   }
 }
 
-// Formulário de login
 .login-form {
   .form-group {
     margin-bottom: $spacing-lg;
@@ -194,7 +186,6 @@
         color: $text-light;
       }
       
-      // Dark mode
       .dark & {
         background: $bg-dark;
         border-color: $border-dark;
@@ -229,7 +220,6 @@
   }
 }
 
-// Botão de login
 .login-button {
   width: 100%;
   padding: 16px;
@@ -270,7 +260,6 @@
     margin-right: $spacing-sm;
   }
   
-  // Dark mode
   .dark & {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     
@@ -281,7 +270,6 @@
   }
 }
 
-// Credenciais de teste
 .login-credentials {
   text-align: center;
   padding: $spacing-md;
@@ -335,14 +323,12 @@
     }
   }
   
-  // Dark mode
   .dark & {
     background: rgba(75, 85, 99, 0.2);
     border-color: rgba(75, 85, 99, 0.3);
   }
 }
 
-// Footer
 .login-footer {
   text-align: center;
   margin-top: $spacing-xl;
@@ -357,7 +343,6 @@
   }
 }
 
-// Animations
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -367,7 +352,6 @@
   }
 }
 
-// Responsividade
 @media (max-width: $mobile) {
   .login-container {
     padding: $spacing-md;

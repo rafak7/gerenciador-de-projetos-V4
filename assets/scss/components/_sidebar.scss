@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Sidebar desktop
 .main-sidebar {
   position: fixed;
   top: 0;
@@ -76,7 +75,6 @@
   }
 }
 
-// Sidebar mobile
 .mobile-sidebar {
   position: fixed;
   top: 0;
@@ -132,7 +130,6 @@
   }
 }
 
-// Itens de navegação
 .nav-item {
   display: flex;
   align-items: center;
@@ -174,7 +171,6 @@
   }
 }
 
-// Overlay para mobile
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -185,7 +181,6 @@
   z-index: 40;
 }
 
-// Dark mode
 .dark {
   .main-sidebar {
     .sidebar-container {

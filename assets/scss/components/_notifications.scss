@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Container de notificações
 .notifications-container {
   position: fixed;
   top: 80px;
@@ -24,7 +23,6 @@
   gap: $spacing-sm;
 }
 
-// Card de notificação
 .notification-card {
   background-color: $bg-white;
   border-radius: $border-radius-lg;
@@ -127,7 +125,6 @@
   }
 }
 
-// Animações
 .notification-enter-active {
   transition: all 0.3s ease-out;
 }
@@ -150,7 +147,6 @@
   transition: transform 0.3s ease;
 }
 
-// Dark mode
 .dark {
   .notification-card {
     background-color: $bg-dark-secondary;

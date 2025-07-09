@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Campo de input básico
 .input-field {
   width: 100%;
   padding: 10px 12px;
@@ -27,7 +26,6 @@
   }
 }
 
-// Label
 .form-label {
   display: block;
   margin-bottom: $spacing-sm;
@@ -36,19 +34,16 @@
   font-size: 14px;
 }
 
-// Grupo de campo
 .form-group {
   margin-bottom: $spacing-md;
 }
 
-// Mensagem de erro
 .error-message {
   color: $danger-color;
   font-size: 12px;
   margin-top: $spacing-xs;
 }
 
-// Select
 .select-field {
   @include input-field;
   cursor: pointer;
@@ -58,14 +53,12 @@
   }
 }
 
-// Textarea
 .textarea-field {
   @include input-field;
   min-height: 100px;
   resize: vertical;
 }
 
-// Checkbox e Radio
 .checkbox, .radio {
   display: inline-flex;
   align-items: center;
@@ -82,7 +75,6 @@
   }
 } 
 
-// Dark mode
 .dark {
   .input-field {
     background-color: $bg-dark;

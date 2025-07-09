@@ -60,25 +60,21 @@
 </template>
 
 <script setup lang="ts">
-// Layout
 definePageMeta({
   layout: 'auth',
   middleware: 'guest'
 })
 
-// SEO
 useHead({
   title: 'Login - Gerenciador de Projetos'
 })
 
-// Stores
 const authStore = useAuthStore()
 const uiStore = useUIStore()
 const { isLoading, error } = storeToRefs(authStore)
 const { login, clearError } = authStore
 const { showError, showSuccess } = uiStore
 
-// Form state
 const form = reactive({
   email: '',
   senha: ''
@@ -88,8 +84,6 @@ const errors = reactive({
   email: '',
   senha: ''
 })
-
-// Methods
 const validateForm = () => {
   errors.email = ''
   errors.senha = ''
@@ -138,14 +132,12 @@ const handleLogin = async () => {
   }
 }
 
-// Clear errors when error changes
 watch(error, (newError) => {
   if (newError) {
     showError('Erro no login', newError)
   }
 })
 
-// Auto-fill for demo
 onMounted(() => {
   form.email = 'admin@gerenciador.com'
   form.senha = 'admin123'

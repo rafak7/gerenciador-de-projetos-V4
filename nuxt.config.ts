@@ -1,39 +1,31 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   
-  // TypeScript configuration
   typescript: {
-    typeCheck: false // Desabilitado para evitar erros de inicialização
+    typeCheck: false
   },
   
-  // SSR configuration
   ssr: true,
   
-  // CSS Framework
   css: ['~/assets/scss/main.scss'],
   
-  // Modules
   modules: [
     '@pinia/nuxt',
     '@vueuse/nuxt'
   ],
   
-  // Dev server config
   devServer: {
     port: 3000,
     host: 'localhost'
   },
   
-  // Runtime config
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:3001'
     }
   },
   
-  // Head configuration
   app: {
     head: {
       title: 'Gerenciador de Projetos',
@@ -48,7 +40,6 @@ export default defineNuxtConfig({
     }
   },
   
-  // Build configuration
   build: {
     transpile: ['@headlessui/vue', '@heroicons/vue']
   }

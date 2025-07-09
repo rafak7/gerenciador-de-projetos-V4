@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-// Verificar autenticação e redirecionar
 onMounted(() => {
   if (process.client) {
     const token = localStorage.getItem('auth-token')
@@ -17,22 +16,18 @@ onMounted(() => {
     if (token && userData) {
       try {
         JSON.parse(userData)
-        // Usuário autenticado, redirecionar para projetos
         navigateTo('/projetos')
       } catch (error) {
-        // Dados corrompidos, limpar e ir para login
         localStorage.removeItem('auth-token')
         localStorage.removeItem('user-data')
         navigateTo('/login')
       }
     } else {
-      // Usuário não autenticado, ir para login
       navigateTo('/login')
     }
   }
 })
 
-// SEO
 useHead({
   title: 'Gerenciador de Projetos'
 })

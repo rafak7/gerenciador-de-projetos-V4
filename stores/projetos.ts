@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import type { Projeto, NovoProjetoInput, FilterOptions, ProjetosPaginados, PaginationMeta } from '~/types'
 
 export const useProjetosStore = defineStore('projetos', () => {
-  // State
   const projetos = ref<Projeto[]>([])
   const currentProjeto = ref<Projeto | null>(null)
   const lastCreatedProjetoId = ref<string | null>(null)
@@ -27,27 +26,22 @@ export const useProjetosStore = defineStore('projetos', () => {
     sortOrder: 'asc'
   })
 
-  // Runtime config
   const config = useRuntimeConfig()
 
-  // Actions
   const fetchProjetos = async (options?: FilterOptions) => {
     loading.value.list = true
     error.value = null
 
     try {
-      // Atualizar filtros se fornecidos
       if (options) {
         filters.value = { ...filters.value, ...options }
       }
 
-      // Buscar TODOS os projetos primeiro
       const queryParams: Record<string, string> = {
         _sort: filters.value.sortBy || 'nome',
         _order: filters.value.sortOrder || 'asc'
       }
 
-      // Adicionar filtros de pesquisa
       if (filters.value.search) {
         queryParams.q = filters.value.search
       }
@@ -62,20 +56,16 @@ export const useProjetosStore = defineStore('projetos', () => {
         query: queryParams
       })
 
-      // Implementar paginação no lado cliente
       const currentPage = filters.value.page || 1
       const itemsPerPage = filters.value.limit || 12
       const startIndex = (currentPage - 1) * itemsPerPage
       const endIndex = startIndex + itemsPerPage
 
-      // Paginar os resultados
       projetos.value = allFilteredProjects.slice(startIndex, endIndex)
 
-      // Calcular paginação
       const totalPages = Math.ceil(allFilteredProjects.length / itemsPerPage)
       const validCurrentPage = totalPages > 0 ? Math.min(currentPage, totalPages) : 1
       
-      // Se recalculamos a página válida, usar ela para repaginar
       if (validCurrentPage !== currentPage) {
         filters.value.page = validCurrentPage
         const newStartIndex = (validCurrentPage - 1) * itemsPerPage
@@ -117,10 +107,8 @@ export const useProjetosStore = defineStore('projetos', () => {
     error.value = null
 
     try {
-      // Buscar todos os projetos para determinar o próximo ID
       const allProjetos = await $fetch<Projeto[]>(`${config.public.apiBase}/projetos`)
       
-      // Encontrar o maior ID numérico existente
       let maxId = 0
       allProjetos.forEach(projeto => {
         const id = parseInt(projeto.id.toString())
@@ -129,10 +117,8 @@ export const useProjetosStore = defineStore('projetos', () => {
         }
       })
       
-      // Gerar próximo ID sequencial
       const nextId = (maxId + 1).toString()
       
-      // Criar projeto com ID sequencial
       const projetoComId = { ...data, id: nextId }
 
       const newProjeto = await $fetch<Projeto>(`${config.public.apiBase}/projetos`, {
@@ -140,10 +126,8 @@ export const useProjetosStore = defineStore('projetos', () => {
         body: projetoComId
       })
 
-      // Atualizar lista local
       projetos.value.unshift(newProjeto)
       
-      // Armazenar ID do último projeto criado
       lastCreatedProjetoId.value = newProjeto.id.toString()
       
       return newProjeto
@@ -160,7 +144,6 @@ export const useProjetosStore = defineStore('projetos', () => {
     error.value = null
 
     try {
-      // Garantir que o ID seja string para compatibilidade com json-server
       const requestBody = { ...data, id: id.toString() }
 
       const updatedProjeto = await $fetch<Projeto>(`${config.public.apiBase}/projetos/${id}`, {
@@ -168,13 +151,11 @@ export const useProjetosStore = defineStore('projetos', () => {
         body: requestBody
       })
 
-      // Atualizar lista local - comparar IDs como string para compatibilidade
       const index = projetos.value.findIndex(p => p.id.toString() === id.toString())
       if (index !== -1) {
         projetos.value[index] = updatedProjeto
       }
 
-      // Atualizar projeto atual se for o mesmo
       if (currentProjeto.value?.id.toString() === id.toString()) {
         currentProjeto.value = updatedProjeto
       }
@@ -197,10 +178,8 @@ export const useProjetosStore = defineStore('projetos', () => {
         method: 'DELETE'
       })
 
-      // Remover da lista local - comparar IDs como string para compatibilidade
       projetos.value = projetos.value.filter(p => p.id.toString() !== id.toString())
       
-      // Limpar projeto atual se for o mesmo
       if (currentProjeto.value?.id.toString() === id.toString()) {
         currentProjeto.value = null
       }
@@ -230,7 +209,6 @@ export const useProjetosStore = defineStore('projetos', () => {
     lastCreatedProjetoId.value = null
   }
 
-  // Getters
   const isLoading = computed(() => Object.values(loading.value).some(l => l))
   const totalProjetos = computed(() => pagination.value.totalItems)
   const hasNextPage = computed(() => {
@@ -241,7 +219,6 @@ export const useProjetosStore = defineStore('projetos', () => {
   })
 
   return {
-    // State
     projetos: readonly(projetos),
     currentProjeto: readonly(currentProjeto),
     lastCreatedProjetoId: readonly(lastCreatedProjetoId),
@@ -250,7 +227,6 @@ export const useProjetosStore = defineStore('projetos', () => {
     pagination: readonly(pagination),
     filters: readonly(filters),
     
-    // Actions
     fetchProjetos,
     fetchProjetoById,
     createProjeto,
@@ -261,7 +237,6 @@ export const useProjetosStore = defineStore('projetos', () => {
     resetCurrentProjeto,
     clearLastCreatedHighlight,
     
-    // Getters
     isLoading,
     totalProjetos,
     hasNextPage,

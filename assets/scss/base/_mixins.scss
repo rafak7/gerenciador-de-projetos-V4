@@ -1,6 +1,5 @@
 @use 'variables' as *;
 
-// Mixin para botão base
 @mixin btn {
   display: inline-flex;
   align-items: center;
@@ -19,7 +18,6 @@
   }
 }
 
-// Mixin para botão primário
 @mixin btn-primary {
   @include btn;
   background-color: $primary-color;
@@ -31,7 +29,6 @@
   }
 }
 
-// Mixin para botão secundário
 @mixin btn-secondary {
   @include btn;
   background-color: $secondary-color;
@@ -42,7 +39,6 @@
   }
 }
 
-// Mixin para botão icone
 @mixin btn-icon {
   padding: 8px;
   border-radius: 50%;
@@ -57,7 +53,6 @@
   }
 }
 
-// Mixin para card
 @mixin card {
   background-color: $bg-white;
   border-radius: $border-radius-lg;
@@ -71,7 +66,6 @@
   }
 }
 
-// Mixin para input field
 @mixin input-field {
   width: 100%;
   padding: 10px 12px;
@@ -97,12 +91,10 @@
   }
 }
 
-// Mixin para form group
 @mixin form-group {
   margin-bottom: $spacing-md;
 }
 
-// Mixin para form label
 @mixin form-label {
   display: block;
   margin-bottom: $spacing-sm;
@@ -111,7 +103,6 @@
   font-size: 14px;
 }
 
-// Mixin para loading spinner
 @mixin loading-spinner {
   width: 32px;
   height: 32px;
@@ -121,14 +112,12 @@
   animation: spin 1s linear infinite;
 }
 
-// Mixin para truncar texto
 @mixin text-truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-// Mixin para texto multiline truncate
 @mixin text-truncate-multiline($lines: 2) {
   display: -webkit-box;
   -webkit-line-clamp: #{$lines};
@@ -137,14 +126,12 @@
   text-overflow: ellipsis;
 }
 
-// Mixin para centralizar conteúdo
 @mixin center-content {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-// Mixin para posicionamento absoluto centrado
 @mixin absolute-center {
   position: absolute;
   top: 50%;
@@ -152,7 +139,6 @@
   transform: translate(-50%, -50%);
 }
 
-// Mixins para breakpoints responsivos
 @mixin mobile {
   @media (max-width: 768px) {
     @content;

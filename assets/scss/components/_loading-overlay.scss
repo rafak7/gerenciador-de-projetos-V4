@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Componente de overlay de carregamento
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -37,7 +36,6 @@
   }
 } 
 
-// Dark mode
 .dark {
   .loading-overlay {
     .loading-box {

@@ -49,12 +49,10 @@ import {
   XMarkIcon
 } from '@heroicons/vue/24/outline'
 
-// Store
 const uiStore = useUIStore()
 const { notifications } = storeToRefs(uiStore)
 const { removeNotification } = uiStore
 
-// Methods
 const getIcon = (type: string) => {
   const icons = {
     success: CheckCircleIcon,

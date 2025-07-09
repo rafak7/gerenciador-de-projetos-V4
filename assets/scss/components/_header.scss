@@ -1,7 +1,6 @@
 @use '../base/variables' as *;
 @use '../base/mixins' as *;
 
-// Header principal
 .main-header {
   background-color: $bg-white;
   border-bottom: 1px solid $border-color;
@@ -20,7 +19,6 @@
   }
 }
 
-// Seção esquerda
 .header-left {
   display: flex;
   align-items: center;
@@ -47,14 +45,12 @@
   }
 }
 
-// Seção direita
 .header-right {
   display: flex;
   align-items: center;
   gap: $spacing-md;
 }
 
-// Botão de modo escuro
 .dark-mode-toggle {
   @include btn-icon;
   color: $text-light;
@@ -69,7 +65,6 @@
   }
 }
 
-// Menu do usuário
 .user-menu {
   position: relative;
   
@@ -116,7 +111,6 @@
   }
 }
 
-// Dropdown do usuário
 .user-dropdown {
   position: absolute;
   right: 0;
@@ -154,7 +148,6 @@
   }
 }
 
-// Animações do dropdown
 .dropdown-enter-active {
   transition: all 0.1s ease-out;
 }
@@ -173,7 +166,6 @@
   opacity: 0;
 } 
 
-// Dark mode
 .dark {
   .main-header {
     background-color: $bg-dark-secondary;
